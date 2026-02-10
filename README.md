@@ -1,8 +1,8 @@
 ---
-👋 Salut, je suis Anthony  
----
+👋 Salut, je m'appelle Anthony  
+
 🎯 Data Analyst / Business Intelligence / Data engineer 
----
+
 ---
 🔹 Ce que je fais
 ---
