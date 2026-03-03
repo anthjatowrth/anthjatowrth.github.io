@@ -1,5 +1,5 @@
 ---
-👋 Salut, je m'appelle Anthony  
+Salut, je m'appelle Anthony, bienvenue sur ma page GitHub  
 ---
 
 🎯 Data Analyst / Business Intelligence / Data engineer 
@@ -7,16 +7,18 @@
 ---
 🔹 Ce que je fais
 ---
-- Analyse de données
-- Dashboards interactifs
+- Nettoyage et analyse de données
+- Dashboards interactifs (BI)
+- Machine learning
+- Data visualisation
 - Projets data de bout en bout
 ---
 🔹 Projets phares
 ---
-➡️ IMDb Streamlit App
+➡️ CinéData - Projet streamlit et machine learning
 ➡️ Toys & Models - Projet BI
 
 ---
 🔹 Stack
 ---
-Python • Pandas • Streamlit • Power BI • Git
+Python • SQL • Pandas • Scikit-learn • Streamlit • Power BI • CSS • Git
