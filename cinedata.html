@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CinéData — Projet | Anthony</title>
+  <meta name="description" content="Projet CinéData : pipeline IMDb/TMDb, nettoyage, enrichissement, recommandation Nearest Neighbors, app Streamlit." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">
+        <span class="brand-dot" aria-hidden="true"></span>
+        <span class="brand-text">Anthony</span>
+      </a>
+
+      <nav class="nav">
+        <a href="index.html#projects">Projets</a>
+        <a href="index.html#skills">Compétences</a>
+        <a class="btn btn-sm" href="index.html#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="container">
+      <div class="breadcrumbs">
+        <a class="link" href="index.html">Accueil</a> <span class="sep">/</span> CinéData
+      </div>
+
+      <div class="project-hero">
+        <div>
+          <h1>CinéData</h1>
+          <p class="lead">
+            Construction d’un moteur de recommandation de films : ingestion IMDb/TMDb, pipeline de nettoyage,
+            enrichissement (affiches/résumés), modèle Nearest Neighbors et application Streamlit.
+          </p>
+
+          <div class="chips">
+            <span class="chip">Python</span>
+            <span class="chip">Pandas</span>
+            <span class="chip">Scikit-learn</span>
+            <span class="chip">Nearest Neighbors</span>
+            <span class="chip">Streamlit</span>
+          </div>
+
+          <div class="row" style="margin-top: 16px;">
+            <a class="btn btn-sm" href="#" target="_blank" rel="noopener">Repo GitHub</a>
+            <a class="btn btn-sm btn-ghost" href="#" target="_blank" rel="noopener">Démo Streamlit</a>
+          </div>
+        </div>
+
+        <div class="project-cover placeholder" aria-label="Visuel CinéData"></div>
+      </div>
+
+      <div class="grid-2" style="margin-top: 18px;">
+        <div class="card">
+          <div class="card-body">
+            <h2>Contexte</h2>
+            <p>
+              CinéData vise à faciliter la découverte de films via la recommandation. Le projet s’appuie sur des
+              données publiques issues d’IMDb et de TMDb, afin de construire une base filtrée, enrichie et exploitable.
+            </p>
+            <p class="muted small">
+              (Tu peux préciser les critères exacts de filtrage et les volumes une fois que tu veux.)
+            </p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-body">
+            <h2>Objectifs</h2>
+            <ul class="bullets">
+              <li>Assembler des datasets hétérogènes (IMDb + TMDb) et fiabiliser les clés de jointure.</li>
+              <li>Nettoyer et filtrer (doublons, valeurs manquantes, outliers, cohérence de genres).</li>
+              <li>Enrichir les films (résumés, posters, métadonnées pertinentes).</li>
+              <li>Créer un modèle de recommandation utilisable dans une app Streamlit.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <section class="section" style="padding-left:0;padding-right:0;">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-body">
+              <h2>Pipeline Data</h2>
+              <p>
+                Le pipeline automatise l’import, le nettoyage et la préparation des données :
+                normalisation des colonnes, gestion des valeurs manquantes, filtrage des films selon des critères
+                de qualité, et enrichissement via l’API TMDb.
+              </p>
+              <ul class="bullets">
+                <li>Ingestion : fichiers IMDb + requêtes TMDb</li>
+                <li>Nettoyage : NA / doublons / typage / contrôle de cohérence</li>
+                <li>Filtrage : seuils (votes, popularité, années), selon la stratégie</li>
+                <li>Enrichissement : posters, synopsis, genres, casting (optionnel)</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-body">
+              <h2>Recommandation ML</h2>
+              <p>
+                J’ai mis en place une approche basée sur <strong>Nearest Neighbors</strong> :
+                transformation des caractéristiques (TF-IDF / encodages), standardisation si besoin,
+                puis recherche de films similaires par distance.
+              </p>
+              <ul class="bullets">
+                <li>Vectorisation des features (texte + attributs)</li>
+                <li>Mesure de similarité (cosine / euclidienne selon choix)</li>
+                <li>Top-N recommandations explicables</li>
+                <li>Évaluation qualitative (tests utilisateurs) + itérations</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:14px;">
+          <div class="card-body">
+            <h2>Application Streamlit</h2>
+            <p>
+              Une interface simple permet à l’utilisateur de sélectionner un film et d’obtenir des recommandations,
+              avec affichage des posters, résumés et informations principales. L’app sert également de vitrine
+              pour explorer la base filtrée et enrichie.
+            </p>
+
+            <div class="grid-3">
+              <div class="mini">
+                <h3>Recherche</h3>
+                <p class="muted">Sélection d’un film via recherche ou liste filtrable.</p>
+              </div>
+              <div class="mini">
+                <h3>Recommandation</h3>
+                <p class="muted">Top films similaires avec infos clés et synopsis.</p>
+              </div>
+              <div class="mini">
+                <h3>Exploration</h3>
+                <p class="muted">Accès à une base enrichie (genres, années, popularité…).</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout">
+          <strong>À ajouter :</strong> 2 captures de l’app Streamlit et un exemple de recommandations (dans <code>assets/screens/</code>).
+        </div>
+      </section>
+
+      <div class="row" style="margin-top: 8px;">
+        <a class="btn btn-ghost" href="toys-and-models.html">← Projet précédent</a>
+        <a class="btn" href="index.html#projects">Retour aux projets →</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p class="muted small">© <span id="year"></span> Anthony • Portfolio Data</p>
+      <a class="link small" href="index.html">Accueil</a>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
