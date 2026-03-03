@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Toys and Models — Projet | Anthony</title>
+  <meta name="description" content="Projet Toys and Models : SQL, vues de reporting, Power BI, dashboard interactif." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">
+        <span class="brand-dot" aria-hidden="true"></span>
+        <span class="brand-text">Anthony</span>
+      </a>
+
+      <nav class="nav">
+        <a href="index.html#projects">Projets</a>
+        <a href="index.html#skills">Compétences</a>
+        <a class="btn btn-sm" href="index.html#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="container">
+      <div class="breadcrumbs">
+        <a class="link" href="index.html">Accueil</a> <span class="sep">/</span> Toys and Models
+      </div>
+
+      <div class="project-hero">
+        <div>
+          <h1>Toys and Models</h1>
+          <p class="lead">
+            Exploration d’une base relationnelle, création de tables/vues orientées BI, puis construction d’un dashboard Power BI interactif.
+          </p>
+
+          <div class="chips">
+            <span class="chip">SQL</span>
+            <span class="chip">Modélisation BI</span>
+            <span class="chip">Power BI</span>
+            <span class="chip">DAX</span>
+            <span class="chip">Reporting</span>
+          </div>
+
+          <div class="row" style="margin-top: 16px;">
+            <a class="btn btn-sm" href="#" target="_blank" rel="noopener">Repo GitHub</a>
+            <a class="btn btn-sm btn-ghost" href="#" target="_blank" rel="noopener">Dashboard / PDF</a>
+          </div>
+        </div>
+
+        <div class="project-cover placeholder" aria-label="Visuel Toys and Models"></div>
+      </div>
+
+      <div class="grid-2" style="margin-top: 18px;">
+        <div class="card">
+          <div class="card-body">
+            <h2>Contexte</h2>
+            <p>
+              Toys and Models est un projet de reporting décisionnel basé sur une base de données transactionnelle
+              (clients, commandes, produits, paiements). L’objectif : fournir une lecture claire de la performance
+              commerciale via des KPIs fiables et filtrables.
+            </p>
+            <p class="muted small">
+              (Tu peux remplacer ce texte par le contexte exact de ton projet.)
+            </p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-body">
+            <h2>Objectifs</h2>
+            <ul class="bullets">
+              <li>Comprendre le modèle relationnel et fiabiliser les jointures clés.</li>
+              <li>Créer des vues SQL “reporting-ready” (granularité, agrégations, dimensions).</li>
+              <li>Concevoir un modèle BI (type étoile) et des mesures DAX.</li>
+              <li>Produire un dashboard interactif (filtres, drill-down, KPIs).</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <section class="section" style="padding-left:0;padding-right:0;">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-body">
+              <h2>Travail SQL</h2>
+              <p>
+                Après exploration du schéma, j’ai construit un ensemble de <strong>vues SQL</strong> dédiées au reporting :
+                CA par période, performance par catégorie/produit, segmentation client, suivi des commandes et paiements.
+              </p>
+              <ul class="bullets">
+                <li>Jointures multi-tables (orders, orderdetails, customers, products, payments…)</li>
+                <li>Agrégations (mensuelles / trimestrielles), cohérence des totaux</li>
+                <li>Calculs de marges, panier moyen, top produits / top clients</li>
+                <li>Structuration d’un modèle de type étoile pour la BI</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-body">
+              <h2>Power BI</h2>
+              <p>
+                Les vues ont été importées dans Power BI afin de construire un modèle analytique,
+                puis des mesures DAX pour rendre les KPIs comparables dans le temps.
+              </p>
+              <ul class="bullets">
+                <li>Modèle relationnel + tables de dates</li>
+                <li>Mesures DAX : CA, marge, croissance, panier moyen</li>
+                <li>Filtres, segments, drill-down par produit/client/pays</li>
+                <li>Pages dédiées : vue exécutive, ventes, produits, clients</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:14px;">
+          <div class="card-body">
+            <h2>Résultats & apprentissages</h2>
+            <div class="grid-3">
+              <div class="mini">
+                <h3>Fiabilité</h3>
+                <p class="muted">Vues SQL reproductibles, totaux cohérents, logique de calcul documentée.</p>
+              </div>
+              <div class="mini">
+                <h3>Lisibilité</h3>
+                <p class="muted">Dashboard orienté décision : KPIs, tendances, segments, comparaisons.</p>
+              </div>
+              <div class="mini">
+                <h3>Scalabilité</h3>
+                <p class="muted">Modèle pensé pour ajouter de nouveaux indicateurs ou dimensions.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout">
+          <strong>À ajouter :</strong> intègre ici 2–3 captures de ton dashboard (dans <code>assets/screens/</code>) et remplace le visuel placeholder.
+        </div>
+      </section>
+
+      <div class="row" style="margin-top: 8px;">
+        <a class="btn btn-ghost" href="index.html#projects">← Retour</a>
+        <a class="btn" href="cinedata.html">Projet suivant : CinéData →</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p class="muted small">© <span id="year"></span> Anthony • Portfolio Data</p>
+      <a class="link small" href="index.html">Accueil</a>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
