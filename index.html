@@ -6,9 +6,7 @@
   <title>Anthony — Data Analyst</title>
   <meta name="description" content="Portfolio Data Analyst — SQL, Python, Power BI, Machine Learning, Streamlit" />
   <link rel="stylesheet" href="styles.css" />
-  <link rel="stylesheet" 
-  <link rel="stylesheet" 
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
 <body>
@@ -34,20 +32,26 @@
       <div class="container hero-grid">
         <div class="hero-content">
           <p class="kicker">Portfolio • Data Analyst</p>
-          <h1>Rigueur analytique, vision stratégique et compétences techniques</h1>
+          <h1 class="hero-title">
+            <span>Rigueur analytique</span>
+            <span>Vision stratégique</span>
+            <span>Compétences techniques</span>
+          </h1>
+          <br>
           <p class="lead">
           Fort d’une solide expérience analytique et d’une compréhension business approfondie, j’apporte une expertise métier immédiatement exploitable pour vos projets data, avec une montée en autonomie rapide.
             
           </p>
-
+<br>
           <div class="chips" aria-label="Points forts">
-            <span class="chip">SQL & Modélisation</span>
-            <span class="chip">Python & Data Cleaning</span>
-            <span class="chip">Power BI & DAX</span>
-            <span class="chip">Machine Learning</span>
-            <span class="chip">Présentation et reporting de données</span>
+            <span class="chip chip-sql">SQL & Modélisation</span>
+            <span class="chip chip-python">Python & Data Cleaning</span>
+            <span class="chip chip-bi">Power BI & DAX</span>
+            <span class="chip chip-ml">Machine Learning</span>
+            <span class="chip chip-report">Présentation et reporting de données</span>
+            <span class="chip chip-report">Technologies Web </span>
           </div>
-
+          <br>
           <div class="links-row">
 
             <a class="link" href="https://www.linkedin.com/in/anthonyjw" target="_blank" rel="noopener">
@@ -67,15 +71,18 @@
           </div>
         </div>
 
-        <aside class="hero-card card">
+        <aside class="hero-card card" style="overflow:hidden;">
+          <img src="assets/profile.png" 
+               alt="Photo de profil"
+               style="width:100%; height:280px; object-fit:cover; object-position:center 15%; display:block; border-radius:22px 22px 0 0;">
           <div class="card-body">
-            <img src="assets/profile.png" 
-                alt="Photo de profil"
-                style="width:100%; height:220px; object-fit:cover; object-position:center top; display:block; border-radius:14px 14px 0 0; margin-bottom:14px;">
             <h2 class="card-title">Junior Data Analyst / Former Financial Advisor </h2>
             <p class="muted">
+              <hr>
               Wild Code School - Data Analyst - Bootcamp novembre 2025<br>
+              <hr>
               INSEE - Msc 2 AFI - 2016<br>
+              <hr>
               IAE de Bordeaux - Master GPF - 2015
             </p>
             <p class="small muted">
@@ -98,13 +105,16 @@
             <div class="card-body">
               <h3>Du raisonnement financier à la Data</h3>
               <p>
-                Diplômé en analyse financière, j’ai développé une forte rigueur : compréhension des enjeux,
-                contrôle de la qualité des données, interprétation d’indicateurs et restitution claire à des décideurs.
+                Mon expérience dans le domaine de la finance et le budget m'a permis de développer une forte rigueur analytique qui se traduit par une compréhension des enjeux,
+                un contrôle de la qualité des données, une interprétation claire des indicateurs et restitution professionnelle à des décideurs.
               </p>
               <p>
                 Avec ma reconversion dans la Data (Wild Code School), j’ai renforcé ma capacité à produire
-                des livrables techniques : exploration de bases SQL, pipelines de transformation, analyse Python,
-                dashboards Power BI et applications Streamlit.
+                des livrables techniques : vues SQL orientées business, pipelines de transformation, analyse Python,
+                dashboards Power BI, Data viz et autres.
+              </p>
+              <p>Au-delà de la technique, c'est une véritable passion qui m'anime. La data est un univers que j’ai découvert avec grand intérêt.
+                 Je le comprends naturellement ce qui m’a permis une montée en compétence rapide. Cette affinité se traduit par un engagement constant : j'aborde chaque travail et chaque projet avec le même sérieux et la même curiosité.
               </p>
             </div>
           </div>
@@ -113,10 +123,14 @@
             <div class="card-body">
               <h3>Ce qui me caractérise</h3>
               <ul class="bullets">
-                <li><strong>Exigence & fiabilité :</strong> je challenge les chiffres, je vérifie les hypothèses, j’évite les conclusions hâtives.</li>
-                <li><strong>Vision “métier” :</strong> j’essaie de relier la donnée à une décision concrète (KPI, performance, segmentation).</li>
-                <li><strong>Exécution technique :</strong> je passe de la question aux données, puis aux résultats exploitables.</li>
-                <li><strong>Clarté :</strong> dashboards lisibles, analyses expliquées, choix justifiés.</li>
+                <br>
+                <li><strong>Exigence & fiabilité :</strong> je challenge les chiffres, je vérifie les hypothèses et j’évite les conclusions hâtives.</li>
+                <br>
+                <li><strong>Vision “métier” :</strong> j’essaie de relier la donnée à une décision concrète (KPI, performance, objectifs ?).</li>
+                <br>
+                <li><strong>Exécution technique :</strong> je passe de la donnée brute à un véritable livrable exploitable.</li>
+                <br>
+                <li><strong>Clarté :</strong> Mes dashboards sont lisibles et mes analyses expliquées, le but étant de justifier et de vulgariser le moindre de mes choix.</li>
               </ul>
             </div>
           </div>
@@ -246,10 +260,10 @@
                 Exploration SQL, création de vues pour le reporting, export vers Power BI et dashboard interactif.
               </p>
               <div class="tags">
-                <span class="tag">SQL</span>
-                <span class="tag">Modèlisation en étoile</span>
-                <span class="tag">Power BI</span>
-                <span class="tag">DAX</span>
+                <span class="tag tag-sql">SQL</span>
+                <span class="tag tag-model">Modèlisation en étoile</span>
+                <span class="tag tag-bi">Power BI</span>
+                <span class="tag tag-dax">DAX</span>
               </div>
               <div class="row">
                 <a class="btn btn-sm" href="toys-and-models.html">Voir le projet</a>
@@ -267,11 +281,11 @@
                 Pipeline de nettoyage de données, enrichissement avec API et recommandation via Nearest Neighbors sur une app Streamlit.
               </p>
               <div class="tags">
-                <span class="tag">Pandas</span>
+                <span class="tag tag-python">Pandas</span>
+                <span class="tag tag-ml">Scikit-learn</span>
+                <span class="tag tag-stream">Streamlit</span>
                 <span class="tag">chunk</span>
                 <span class="tag">RegEx</span>
-                <span class="tag">Scikit-learn</span>
-                <span class="tag">Streamlit</span>
               </div>
               <div class="row">
                 <a class="btn btn-sm" href="cinedata.html">Voir le projet</a>
@@ -295,7 +309,7 @@
           <div class="card-body contact">
             <div>
               <p class="muted">Email</p>
-              <p><a class="link" href="mailto:anthony.jato.wirth@gmail.com">anthony.jato.wirth@gmail.com</a></p>
+              <p><a class="link" href="/cdn-cgi/l/email-protection#5b3a352f3334352275313a2f34752c32292f331b3c363a323775383436"><span class="__cf_email__" data-cfemail="9dfcf3e9f5f2f3e4b3f7fce9f2b3eaf4efe9f5ddfaf0fcf4f1b3fef2f0">[email&#160;protected]</span></a></p>
             </div>
             <div>
               <p class="muted">LinkedIn</p>
@@ -322,9 +336,4 @@
     </div>
   </footer>
 
-  <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
-    document.getElementById("last-updated").textContent = new Date().getFullYear();
-  </script>
-</body>
-</html>
+  <script data-cfasync="false" src="/cdn-cgi/s

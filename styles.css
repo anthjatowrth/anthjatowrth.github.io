@@ -184,7 +184,7 @@ code{
 }
 
 /* ========== Hero ========== */
-.hero{ padding: 80px 0 24px; }
+.hero{ padding: 80px 0 20px; }
 .hero-grid{
   display: grid;
   grid-template-columns: 1.35fr .65fr;
@@ -192,13 +192,7 @@ code{
   align-items: start;
 }
 
-.hero-grid > :last-child img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  object-position: center top;
-  display: block;
-}
+/* hero-grid aside — handled inline on the card */
 
 .kicker{
   display: inline-flex;
@@ -254,6 +248,13 @@ code{
   color: var(--text);
   background: rgba(124,111,247,.08);
 }
+
+/* ── Colored chips (hero) ── */
+.chip-sql    { border-color: rgba(0,212,255,.35);  color: #6ee7ff; background: rgba(0,212,255,.07); }
+.chip-python { border-color: rgba(255,212,0,.30);  color: #ffe066; background: rgba(255,212,0,.07); }
+.chip-bi     { border-color: rgba(255,180,0,.30);  color: #ffd06b; background: rgba(255,180,0,.07); }
+.chip-ml     { border-color: rgba(124,111,247,.35); color: #c4bbff; background: rgba(124,111,247,.09); }
+.chip-report { border-color: rgba(34,197,94,.30);  color: #86efac; background: rgba(34,197,94,.07); }
 
 .links-row{
   margin-top: 16px;
@@ -442,6 +443,17 @@ code{
   color: #c4bbff;
 }
 
+/* ── Colored tags (tech / domaine) ── */
+.tag-sql    { border-color: rgba(0,212,255,.35);  color: #6ee7ff; background: rgba(0,212,255,.07); }
+.tag-bi     { border-color: rgba(255,180,0,.30);  color: #ffd06b; background: rgba(255,180,0,.07); }
+.tag-dax    { border-color: rgba(240,82,46,.30);  color: #ff8a6e; background: rgba(240,82,46,.07); }
+.tag-model  { border-color: rgba(124,111,247,.35); color: #c4bbff; background: rgba(124,111,247,.09); }
+.tag-python { border-color: rgba(255,212,0,.30);  color: #ffe066; background: rgba(255,212,0,.07); }
+.tag-ml     { border-color: rgba(0,212,255,.35);  color: #6ee7ff; background: rgba(0,212,255,.07); }
+.tag-stream { border-color: rgba(255,75,105,.30); color: #ff9db0; background: rgba(255,75,105,.07); }
+.tag-git    { border-color: rgba(34,197,94,.30);  color: #86efac; background: rgba(34,197,94,.07); }
+.tag-imdb   { border-color: rgba(251,191,36,.30); color: #fcd34d; background: rgba(251,191,36,.07); }
+
 /* Skills grid */
 .skills-grid{
   display: grid;
@@ -621,6 +633,14 @@ code{
 .hero h1{
   animation: fade-up .65s cubic-bezier(.22,1,.36,1) both;
 }
+
+/* Titre principal décalé en escalier */
+.hero-title span {
+  display: block;
+}
+.hero-title span:nth-child(1) { margin-left: 0px; }
+.hero-title span:nth-child(2) { margin-left: 40px; }
+.hero-title span:nth-child(3) { margin-left: 80px; }
 .hero .kicker{
   animation: fade-up .5s cubic-bezier(.22,1,.36,1) both;
 }
