@@ -4,18 +4,159 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>CinéData — Projet | Anthony</title>
-  <meta name="description" content="Projet CinéData : pipeline IMDb/TMDb, nettoyage, enrichissement, recommandation Nearest Neighbors, app Streamlit." />
+  <meta name="description" content="CinéData : application Streamlit de recommandation de films, pipeline IMDB/TMDB, NearestNeighbors, TF-IDF." />
   <link rel="stylesheet" href="styles.css" />
-</head>
+  <style>
 
+    .proj-hero { padding: 52px 0 36px; }
+    .proj-hero-inner {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 22px; align-items: start;
+    }
+    @media (max-width: 860px) { .proj-hero-inner { grid-template-columns: 1fr; } }
+
+    .cover-wrap {
+      border-radius: 20px; overflow: hidden;
+      border: 1px solid var(--border-hi);
+      box-shadow: 0 24px 60px rgba(0,0,0,.55), 0 0 60px rgba(124,111,247,.12);
+      position: relative;
+    }
+    .cover-wrap img { width: 100%; display: block; }
+    .cover-badge {
+      position: absolute; top: 14px; right: 14px;
+      background: rgba(8,10,16,.82); border: 1px solid var(--border-hi);
+      backdrop-filter: blur(8px); padding: 5px 12px; border-radius: 999px;
+      font-size: .75rem; font-weight: 700; color: var(--accent2);
+      font-family: var(--font-display); letter-spacing: .06em; text-transform: uppercase;
+    }
+
+    .step-number {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 36px; height: 36px; border-radius: 12px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff; font-weight: 800; font-size: .92rem;
+      font-family: var(--font-display); flex-shrink: 0;
+      box-shadow: 0 4px 16px rgba(124,111,247,.35);
+    }
+
+    .img-frame {
+      border-radius: 14px; overflow: hidden;
+      border: 1px solid var(--border); background: #0a0d16;
+      box-shadow: 0 12px 36px rgba(0,0,0,.45);
+      transition: transform .3s, box-shadow .3s;
+    }
+    .img-frame:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 20px 50px rgba(0,0,0,.55), 0 0 30px rgba(124,111,247,.12);
+    }
+    .img-frame img { width: 100%; display: block; }
+    .img-caption {
+      font-size: .78rem; color: var(--muted);
+      text-align: center; margin-top: 7px; font-style: italic;
+    }
+
+    .phase-block {
+      border-left: 3px solid var(--accent);
+      padding-left: 22px; margin-bottom: 44px;
+    }
+    .phase-title { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+
+    .img-inline {
+      display: grid; grid-template-columns: 380px 1fr;
+      gap: 20px; align-items: start; margin-bottom: 16px;
+    }
+    @media (max-width: 760px) { .img-inline { grid-template-columns: 1fr; } }
+
+    /* Pipeline */
+    .pipeline {
+      display: grid; grid-template-columns: repeat(5, 1fr);
+      gap: 0; margin: 18px 0 20px;
+    }
+    @media (max-width: 760px) { .pipeline { grid-template-columns: 1fr; } }
+    .pipe-step {
+      background: rgba(15,22,36,.85);
+      border: 1px solid var(--border);
+      padding: 14px 10px; text-align: center; position: relative;
+    }
+    .pipe-step:first-child { border-radius: 12px 0 0 12px; }
+    .pipe-step:last-child  { border-radius: 0 12px 12px 0; }
+    .pipe-step + .pipe-step { border-left: none; }
+    .pipe-step:not(:last-child)::after {
+      content: '→'; position: absolute; right: -10px; top: 50%;
+      transform: translateY(-50%); color: var(--accent); font-size: .85rem; z-index: 2;
+    }
+    .pipe-label {
+      font-size: .68rem; font-weight: 700; letter-spacing: .07em;
+      text-transform: uppercase; color: var(--accent2);
+      font-family: var(--font-display); margin-bottom: 5px;
+    }
+    .pipe-desc { font-size: .75rem; color: var(--muted); line-height: 1.35; }
+
+    /* Steps list */
+    .steps-list {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin: 14px 0;
+    }
+    @media (max-width: 720px) { .steps-list { grid-template-columns: 1fr; } }
+    .step-item {
+      display: flex; align-items: baseline; gap: 10px;
+      background: rgba(15,22,36,.7); border: 1px solid var(--border);
+      border-radius: 10px; padding: 10px 12px; font-size: .82rem;
+    }
+    .step-num {
+      font-family: var(--font-display); font-weight: 800;
+      font-size: .72rem; color: var(--accent2); flex-shrink: 0; min-width: 28px;
+    }
+    .step-txt { color: var(--muted); }
+
+    /* Librairies */
+    .lib-grid {
+      display: grid; grid-template-columns: repeat(5, 1fr);
+      gap: 10px; margin-top: 16px;
+    }
+    @media (max-width: 860px) { .lib-grid { grid-template-columns: repeat(2, 1fr); } }
+    .lib-card {
+      background: rgba(15,22,36,.85); border: 1px solid var(--border);
+      border-radius: 14px; padding: 16px 12px; text-align: center;
+      transition: border-color .2s, transform .2s;
+    }
+    .lib-card:hover { border-color: rgba(124,111,247,.3); transform: translateY(-2px); }
+    .lib-icon { font-size: 1.4rem; margin-bottom: 6px; }
+    .lib-name { font-size: .82rem; font-weight: 700; font-family: var(--font-display); color: var(--text); margin-bottom: 4px; }
+    .lib-desc { font-size: .73rem; color: var(--muted); line-height: 1.4; }
+
+    /* KPIs */
+    .kpi-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 14px; }
+    @media (max-width: 720px) { .kpi-row { grid-template-columns: 1fr; } }
+    .kpi-card { background: rgba(15,22,36,.85); border: 1px solid var(--border); border-radius: 16px; padding: 18px; text-align: center; }
+    .kpi-value {
+      font-size: 1.5rem; font-weight: 800; font-family: var(--font-display);
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text; line-height: 1.1; margin-bottom: 5px;
+    }
+    .kpi-label { font-size: .8rem; color: var(--muted); }
+
+    .tag-python { border-color: rgba(255,212,0,.3);  color: #ffe066; background: rgba(255,212,0,.07); }
+    .tag-ml     { border-color: rgba(0,212,255,.35);  color: #6ee7ff; background: rgba(0,212,255,.07); }
+    .tag-stream { border-color: rgba(255,75,105,.3);  color: #ff9db0; background: rgba(255,75,105,.07); }
+    .tag-git    { border-color: rgba(34,197,94,.3);   color: #86efac; background: rgba(34,197,94,.07); }
+    .tag-imdb   { border-color: rgba(251,191,36,.3);  color: #fcd34d; background: rgba(251,191,36,.07); }
+
+    .section-sep { height:1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 44px 0; }
+    .proj-nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 28px 0 40px; border-top: 1px solid var(--border); margin-top: 44px;
+    }
+  </style>
+</head>
 <body>
+
   <header class="site-header">
     <div class="container header-inner">
       <a class="brand" href="index.html">
         <span class="brand-dot" aria-hidden="true"></span>
-        <span class="brand-text">Anthony</span>
+        <span class="brand-text">Anthony JATO WIRTH</span>
       </a>
-
       <nav class="nav">
         <a href="index.html#projects">Projets</a>
         <a href="index.html#skills">Compétences</a>
@@ -24,136 +165,310 @@
     </div>
   </header>
 
-  <main class="section">
+  <main>
     <div class="container">
-      <div class="breadcrumbs">
-        <a class="link" href="index.html">Accueil</a> <span class="sep">/</span> CinéData
+
+      <div class="breadcrumbs" style="padding-top:28px;">
+        <a class="link" href="index.html">Accueil</a>
+        <span class="sep"> / </span>
+        <span style="color:var(--text);">CinéData</span>
       </div>
 
-      <div class="project-hero">
-        <div>
-          <h1>CinéData</h1>
-          <p class="lead">
-            Construction d’un moteur de recommandation de films : ingestion IMDb/TMDb, pipeline de nettoyage,
-            enrichissement (affiches/résumés), modèle Nearest Neighbors et application Streamlit.
-          </p>
-
-          <div class="chips">
-            <span class="chip">Python</span>
-            <span class="chip">Pandas</span>
-            <span class="chip">Scikit-learn</span>
-            <span class="chip">Nearest Neighbors</span>
-            <span class="chip">Streamlit</span>
-          </div>
-
-          <div class="row" style="margin-top: 16px;">
-            <a class="btn btn-sm" href="#" target="_blank" rel="noopener">Repo GitHub</a>
-            <a class="btn btn-sm btn-ghost" href="#" target="_blank" rel="noopener">Démo Streamlit</a>
-          </div>
-        </div>
-
-        <div class="project-cover placeholder" aria-label="Visuel CinéData"></div>
-      </div>
-
-      <div class="grid-2" style="margin-top: 18px;">
-        <div class="card">
-          <div class="card-body">
-            <h2>Contexte</h2>
-            <p>
-              CinéData vise à faciliter la découverte de films via la recommandation. Le projet s’appuie sur des
-              données publiques issues d’IMDb et de TMDb, afin de construire une base filtrée, enrichie et exploitable.
+      <!-- HERO -->
+      <section class="proj-hero">
+        <div class="proj-hero-inner">
+          <div>
+            <div class="section-label">Projet Data • Machine Learning • Streamlit</div>
+            <h1 style="margin-bottom:14px;">CinéData</h1>
+            <p class="lead" style="margin-bottom:16px;">
+              Application de recommandation de films construite end-to-end : ingestion de 50M+ lignes IMDB,
+              pipeline de nettoyage en 10 étapes, moteur NearestNeighbors avec vectorisation TF-IDF
+              et distance cosine, application Streamlit déployée en production.
             </p>
-            <p class="muted small">
-              (Tu peux préciser les critères exacts de filtrage et les volumes une fois que tu veux.)
-            </p>
-          </div>
-        </div>
 
-        <div class="card">
-          <div class="card-body">
-            <h2>Objectifs</h2>
-            <ul class="bullets">
-              <li>Assembler des datasets hétérogènes (IMDb + TMDb) et fiabiliser les clés de jointure.</li>
-              <li>Nettoyer et filtrer (doublons, valeurs manquantes, outliers, cohérence de genres).</li>
-              <li>Enrichir les films (résumés, posters, métadonnées pertinentes).</li>
-              <li>Créer un modèle de recommandation utilisable dans une app Streamlit.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <section class="section" style="padding-left:0;padding-right:0;">
-        <div class="grid-2">
-          <div class="card">
-            <div class="card-body">
-              <h2>Pipeline Data</h2>
-              <p>
-                Le pipeline automatise l’import, le nettoyage et la préparation des données :
-                normalisation des colonnes, gestion des valeurs manquantes, filtrage des films selon des critères
-                de qualité, et enrichissement via l’API TMDb.
-              </p>
-              <ul class="bullets">
-                <li>Ingestion : fichiers IMDb + requêtes TMDb</li>
-                <li>Nettoyage : NA / doublons / typage / contrôle de cohérence</li>
-                <li>Filtrage : seuils (votes, popularité, années), selon la stratégie</li>
-                <li>Enrichissement : posters, synopsis, genres, casting (optionnel)</li>
-              </ul>
+            <div class="tags" style="margin-bottom:16px;">
+              <span class="tag tag-python">Python</span>
+              <span class="tag tag-ml">Machine Learning</span>
+              <span class="tag tag-stream">Streamlit</span>
+              <span class="tag tag-git">Pandas</span>
+              <span class="tag tag-imdb">HTML + CSS</span>
+              <span class="tag">NearestNeighbors</span>
+              <span class="tag">TF-IDF</span>
+              <span class="tag">Power BI</span>
+              <span class="tag">Requêtes API</span>
+              <span class="tag">RegEx</span>
             </div>
-          </div>
 
-          <div class="card">
-            <div class="card-body">
-              <h2>Recommandation ML</h2>
-              <p>
-                J’ai mis en place une approche basée sur <strong>Nearest Neighbors</strong> :
-                transformation des caractéristiques (TF-IDF / encodages), standardisation si besoin,
-                puis recherche de films similaires par distance.
-              </p>
-              <ul class="bullets">
-                <li>Vectorisation des features (texte + attributs)</li>
-                <li>Mesure de similarité (cosine / euclidienne selon choix)</li>
-                <li>Top-N recommandations explicables</li>
-                <li>Évaluation qualitative (tests utilisateurs) + itérations</li>
-              </ul>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;">
+              <a class="btn btn-primary btn-sm" href="https://cinedata.streamlit.app/" target="_blank" rel="noopener">↗ Voir l'application</a>
+              <a class="btn btn-ghost btn-sm" href="https://github.com/anthjatowrth/cine_data" target="_blank" rel="noopener">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+                Repo GitHub
+              </a>
             </div>
-          </div>
-        </div>
 
-        <div class="card" style="margin-top:14px;">
-          <div class="card-body">
-            <h2>Application Streamlit</h2>
-            <p>
-              Une interface simple permet à l’utilisateur de sélectionner un film et d’obtenir des recommandations,
-              avec affichage des posters, résumés et informations principales. L’app sert également de vitrine
-              pour explorer la base filtrée et enrichie.
-            </p>
-
-            <div class="grid-3">
-              <div class="mini">
-                <h3>Recherche</h3>
-                <p class="muted">Sélection d’un film via recherche ou liste filtrable.</p>
+            <div class="kpi-row">
+              <div class="kpi-card">
+                <div class="kpi-value">50M+</div>
+                <div class="kpi-label">Lignes IMDB traitées</div>
               </div>
-              <div class="mini">
-                <h3>Recommandation</h3>
-                <p class="muted">Top films similaires avec infos clés et synopsis.</p>
+              <div class="kpi-card">
+                <div class="kpi-value">10 000</div>
+                <div class="kpi-label">Films dans le dataset final</div>
               </div>
-              <div class="mini">
-                <h3>Exploration</h3>
-                <p class="muted">Accès à une base enrichie (genres, années, popularité…).</p>
+              <div class="kpi-card">
+                <div class="kpi-value">10</div>
+                <div class="kpi-label">Étapes de pipeline</div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div class="callout">
-          <strong>À ajouter :</strong> 2 captures de l’app Streamlit et un exemple de recommandations (dans <code>assets/screens/</code>).
+          <div>
+            <div class="cover-wrap">
+              <img src="assets/cinedata.png" alt="Page d'accueil CinéData Streamlit" />
+            </div>
+            <p class="img-caption">Page d'accueil — CinéData, déployée sur Streamlit Cloud</p>
+            <div class="callout" style="padding:11px 16px;margin-bottom:14px;">
+              <strong style="color:#86efac;">Premier projet 100% GitHub</strong> — travail collaboratif en équipe,
+              branches par feature, pull requests et code review. Tout le workflow est versionné et reproductible.
+            </div>
+          </div>
         </div>
       </section>
 
-      <div class="row" style="margin-top: 8px;">
-        <a class="btn btn-ghost" href="toys-and-models.html">← Projet précédent</a>
-        <a class="btn" href="index.html#projects">Retour aux projets →</a>
+      <div class="section-sep"></div>
+
+      <section>
+
+        <!-- PHASE 1 — PIPELINE -->
+        <div class="phase-block">
+          <div class="phase-title">
+            <span class="step-number">1</span>
+            <div>
+              <div class="section-label" style="margin-bottom:2px;">Data Engineering</div>
+              <h2 style="margin:0;">Pipeline IMDB + TMDB en 10 étapes</h2>
+            </div>
+          </div>
+
+          <p class="muted" style="max-width:68ch;margin-bottom:18px;">
+            Point de départ : les datasets officiels IMDB, dont certains fichiers dépassent 50 millions de lignes.
+            Pour éviter de tout charger en mémoire, nous avons pré-filtré les datasets nécessaires et certaines données sont traitées <strong style="color:var(--text);">par chunks</strong>,
+            filtrées et enrichies via la database TMDB. Chaque étape est un module Python indépendant
+            (<code>s01</code> → <code>s10</code>) orchestré par <code>pipeline.py</code>,
+            garantissant la reproductibilité complète du processus.
+          </p>
+
+          <div class="pipeline">
+            <div class="pipe-step">
+              <div class="pipe-label">s01–s04</div>
+              <div class="pipe-desc">Chargement & filtrage des titres IMDB</div>
+            </div>
+            <div class="pipe-step">
+              <div class="pipe-label">s05–s07</div>
+              <div class="pipe-desc">Extraction réalisateurs, casting, noms</div>
+            </div>
+            <div class="pipe-step">
+              <div class="pipe-label">s08</div>
+              <div class="pipe-desc">Dataset IMDB final consolidé</div>
+            </div>
+            <div class="pipe-step">
+              <div class="pipe-label">s09</div>
+              <div class="pipe-desc">Nettoyage données TMDB</div>
+            </div>
+            <div class="pipe-step">
+              <div class="pipe-label">s10</div>
+              <div class="pipe-desc">Fusion IMDB + TMDB → 10 000 films</div>
+            </div>
+          </div>
+
+          <div class="steps-list">
+            <div class="step-item"><span class="step-num">s01</span><span class="step-txt">Chargement des basics IMDB (Filtres avec Pandas)</span></div>
+            <div class="step-item"><span class="step-num">s02</span><span class="step-txt">Filtrage sur les versions françaises (RegEx important ici) </span></div>
+            <div class="step-item"><span class="step-num">s03</span><span class="step-txt">Nettoyage des ratings — seuils de votes minimums (filtres)</span></div>
+            <div class="step-item"><span class="step-num">s04</span><span class="step-txt">Sélection des films principaux (filtres)</span></div>
+            <div class="step-item"><span class="step-num">s05</span><span class="step-txt">Extraction des réalisateurs depuis crew</span></div>
+            <div class="step-item"><span class="step-num">s06</span><span class="step-txt">Enrichissement du casting et des producteurs (chunks)</span></div>
+            <div class="step-item"><span class="step-num">s07</span><span class="step-txt">Résolution des noms (chunks)</span></div>
+            <div class="step-item"><span class="step-num">s08</span><span class="step-txt">Consolidation du dataset IMDB final</span></div>
+            <div class="step-item"><span class="step-num">s09</span><span class="step-txt">Nettoyage & normalisation des données TMDB</span></div>
+            <div class="step-item"><span class="step-num">s10</span><span class="step-txt">Fusion multi-sources → dataset ML final (10K films)</span></div>
+          </div>
+        </div>
+
+        <!-- PHASE 2 — ML -->
+        <div class="phase-block" style="border-left-color:var(--accent2);">
+          <div class="phase-title">
+            <span class="step-number" style="background:linear-gradient(135deg,var(--accent2),#0099cc);">2</span>
+            <div>
+              <div class="section-label" style="margin-bottom:2px;color:var(--accent2);">Machine Learning</div>
+              <h2 style="margin:0;">Moteur de recommandation NearestNeighbors</h2>
+            </div>
+          </div>
+
+          <div class="img-inline">
+            <div>
+              <div class="img-frame">
+                <img src="assets/enngine.png" alt="Code build_artifacts — moteur de recommandation" />
+              </div>
+            </div>
+            <div>
+              <p class="muted" style="margin-bottom:14px;">Le moteur combine trois types de features pour construire une matrice de similarité :</p>
+              <ul class="bullets" style="margin-bottom:16px;">
+                <li><strong style="color:var(--accent2);">Texte (TF-IDF)</strong> — résumé, casting et réalisateurs vectorisés en n-grammes (1,2), min/max_df pour filtrer le bruit et sortie en matrice sparses</li>
+                <li><strong style="color:var(--accent2);">Catégories (MultiLabelBinarizer)</strong> — genres, pays d'origine, popularité encodés en matrices binaires sparse aussi</li>
+                <li><strong style="color:var(--accent2);">Numériques (StandardScaler)</strong> — durée, année de sortie, note moyenne normalisées</li>
+              </ul>
+              <p class="muted" style="margin-bottom:14px;">
+                L'utilisation d'une methode de calcul "cosine" se justifie ici par la nature des features choisies. Nous avons beaucoup d'informations textuelles, et malheureusement un simple calcul euclidiéen sera beaucoup trop sensible aux différentes échelles de valeur.<br>
+                Le but ici est de dégager un "profil" de film pour en saisir les similitudes, pas de comparer les valeurs brutes d'une caractéristique.<br>
+                Chaque feature est pondérée (<code>w_genre=0.2</code>, <code>w_sum=0.3</code>, <code>w_cast=0.1</code>…) pour jouer sur leurs importances dans la recommandation.
+                La matrice finale est normalisée avec <code>normalize(X)</code> avant d'être passée à
+                <code>NearestNeighbors(metric="cosine")</code>. <br>
+                <hr>
+                <b>Résumé technique : ce choix gère efficacement les matrices sparse
+                et donne des résultats pertinents sur des données textuelles.</b>
+              </p>
+              <div class="card" style="background:rgba(0,212,255,.05);border-color:rgba(0,212,255,.2);">
+                <div class="card-body" style="padding:12px 14px;">
+                  <p class="small" style="margin:0;color:var(--muted);">
+                    Les poids ont été ajustés empiriquement : le résumé (<code>0.30</code>) et le pays d'origine (<code>0.25</code>)
+                    ont le plus d'influence ; la popularité (<code>0.05</code>) et le casting (<code>0.10</code>) servent d'affinement.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PHASE 3 — STREAMLIT -->
+        <div class="phase-block" style="border-left-color:#ff4b69;">
+          <div class="phase-title">
+            <span class="step-number" style="background:linear-gradient(135deg,#ff4b69,#c0392b);">3</span>
+            <div>
+              <div class="section-label" style="margin-bottom:2px;color:#ff9db0;">Streamlit</div>
+              <h2 style="margin:0;">Application interactive déployée</h2>
+            </div>
+          </div>
+
+          <p class="muted" style="max-width:68ch;margin-bottom:20px;">
+            L'application expose le moteur dans une interface à 3 pages. Les affiches sont récupérées via
+            l'<strong style="color:var(--text);">API OMDB</strong> (avec fallback sur les URLs déjà présentes dans le dataset).
+            Le design est personnalisé avec du <strong style="color:var(--text);">CSS injecté via Markdown</strong> Streamlit.
+            La page de recommandation affiche des <strong style="color:var(--text);">badges de similarité</strong>
+            calculés à partir des distances cosine pour différencier les niveaux de proximité entre films.
+          </p>
+
+          <div class="img-inline">
+            <div>
+              <div class="img-frame" style="border-color:rgba(255,75,105,.2);">
+                <img src="assets/reco.png" alt="Page recommandations CinéData" />
+              </div>
+              <p class="img-caption">Page recommandations — badges cosine, affiches TMDB, filtres période & note</p>
+            </div>
+            <div>
+              <h3 style="margin-bottom:12px;">Les 3 pages de l'application</h3>
+              <ul class="bullets" style="margin-bottom:16px;">
+                <li><strong style="color:var(--text);">Accueil</strong> — présentation du projet et contexte client (cinéma indépendant, département 23)</li>
+                <li><strong style="color:var(--text);">Catalogue</strong> — exploration des 10 000 films avec filtres genre, année, note et fiches détaillées</li>
+                <li><strong style="color:var(--text);">Recommandations</strong> — film de référence + filtres, résultats triés en 3 niveaux de popularité</li>
+              </ul>
+              <div class="grid-2" style="gap:8px;">
+                <div class="card"><div class="card-body" style="padding:11px 13px;">
+                  <h3 style="font-size:.84rem;margin-bottom:3px;">🔥 Valeurs sûres</h3>
+                  <p class="muted small" style="margin:0;">Distance cosine très faible, films très proches</p>
+                </div></div>
+                <div class="card"><div class="card-body" style="padding:11px 13px;">
+                  <h3 style="font-size:.84rem;margin-bottom:3px;">⭐ Belles découvertes</h3>
+                  <p class="muted small" style="margin:0;">Films similaires mais moins évidents</p>
+                </div></div>
+                <div class="card"><div class="card-body" style="padding:11px 13px;">
+                  <h3 style="font-size:.84rem;margin-bottom:3px;">💎 Pépites cachées</h3>
+                  <p class="muted small" style="margin:0;">Distance plus grande mais avec similarité thématique</p>
+                </div></div>
+                <div class="card"><div class="card-body" style="padding:11px 13px;">
+                  <h3 style="font-size:.84rem;margin-bottom:3px;">🎨 Fiche détaillée</h3>
+                  <p class="muted small" style="margin:0;">Chaque film possède une fiche détaillée avec des recommandations brutes sous celle-ci</p>
+                </div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- LIBRAIRIES -->
+        <div class="section-sep"></div>
+
+        <div style="margin-bottom:44px;">
+          <div class="section-label">Stack technique</div>
+          <h2 style="margin-bottom:6px;">Principales librairies Python</h2>
+          <p class="muted" style="margin-bottom:4px;">5 librairies clés parmi la vingtaine utilisée dans le projet.</p>
+          <div class="lib-grid">
+            <div class="lib-card">
+              <div class="lib-icon">🐼</div>
+              <div class="lib-name">pandas</div>
+              <div class="lib-desc">Manipulation des datasets, nettoyage, fusions multi-sources en pipeline</div>
+            </div>
+            <div class="lib-card">
+              <div class="lib-icon">🤖</div>
+              <div class="lib-name">scikit-learn</div>
+              <div class="lib-desc">TF-IDF, MultiLabelBinarizer, StandardScaler, NearestNeighbors</div>
+            </div>
+            <div class="lib-card">
+              <div class="lib-icon">🔢</div>
+              <div class="lib-name">numpy</div>
+              <div class="lib-desc">Construction et normalisation de la matrice de features sparse</div>
+            </div>
+            <div class="lib-card">
+              <div class="lib-icon">🎈</div>
+              <div class="lib-name">streamlit</div>
+              <div class="lib-desc">Interface web multi-pages, déploiement cloud, CSS custom</div>
+            </div>
+            <div class="lib-card">
+              <div class="lib-icon">🌐</div>
+              <div class="lib-name">requests</div>
+              <div class="lib-desc">Appels API OMDB pour affiches et métadonnées en temps réel</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RÉSULTATS -->
+        <div class="section-sep"></div>
+
+        <div style="margin-bottom:44px;">
+          <div class="section-label">Bilan</div>
+          <h2 style="margin-bottom:6px;">Résultats & apprentissages</h2>
+          <p class="muted" style="margin-bottom:20px;">Un projet end-to-end complet, du fichier brut à l'application en production.</p>
+          <div class="grid-3">
+            <div class="card card-hi">
+              <div class="card-body">
+                <div style="font-size:1.4rem;margin-bottom:8px;">🔗</div>
+                <h3>Pipeline reproductible</h3>
+                <p class="muted small">10 étapes modulaires (<code>s01→s10</code>) orchestrées par <code>pipeline.py</code>. Chaque étape produit des artefacts intermédiaires versionés sur GitHub.</p>
+              </div>
+            </div>
+            <div class="card card-hi">
+              <div class="card-body">
+                <div style="font-size:1.4rem;margin-bottom:8px;">🧠</div>
+                <h3>Feature engineering hybride</h3>
+                <p class="muted small">TF-IDF, MultiLabelBinarizer et StandardScaler combinés avec pondération manuelle pour des recommandations précises et nuancées.</p>
+              </div>
+            </div>
+            <div class="card card-hi">
+              <div class="card-body">
+                <div style="font-size:1.4rem;margin-bottom:8px;">🚀</div>
+                <h3>Mise en production</h3>
+                <p class="muted small">Application déployée sur Streamlit Cloud, architecture modulaire multi-pages, CSS personnalisé et appels API TMDB en temps réel.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <div class="proj-nav">
+        <a class="btn btn-ghost btn-sm" href="toys-and-models.html">← Projet précédent : Toys and Models</a>
+        <a class="btn btn-sm" href="index.html#projects">Tous les projets →</a>
       </div>
+
     </div>
   </main>
 
@@ -164,8 +479,6 @@
     </div>
   </footer>
 
-  <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
-  </script>
+  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
 </body>
 </html>

@@ -3,19 +3,240 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Toys and Models — Projet | Anthony</title>
+  <title>Toys and Models — Projet | Anthony JATO WIRTH</title>
   <meta name="description" content="Projet Toys and Models : SQL, vues de reporting, Power BI, dashboard interactif." />
   <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* ── Page-specific styles ── */
+
+    /* Hero projet */
+    .proj-hero {
+      padding: 52px 0 40px;
+    }
+    .proj-hero-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+    @media (max-width: 860px) {
+      .proj-hero-inner { grid-template-columns: 1fr; }
+    }
+
+    /* Cover image (GIF Power BI en hero) */
+    .cover-wrap {
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid var(--border-hi);
+      box-shadow: 0 24px 60px rgba(0,0,0,.55), 0 0 60px rgba(124,111,247,.12);
+      position: relative;
+    }
+    .cover-wrap img, .cover-wrap video {
+      width: 100%;
+      display: block;
+    }
+    .cover-badge {
+      position: absolute;
+      top: 14px; right: 14px;
+      background: rgba(8,10,16,.82);
+      border: 1px solid var(--border-hi);
+      backdrop-filter: blur(8px);
+      padding: 5px 12px;
+      border-radius: 999px;
+      font-size: .75rem;
+      font-weight: 700;
+      color: var(--accent2);
+      font-family: var(--font-display);
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    /* Section steps (numérotées) */
+    .step-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px; height: 36px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff;
+      font-weight: 800;
+      font-size: .92rem;
+      font-family: var(--font-display);
+      flex-shrink: 0;
+      box-shadow: 0 4px 16px rgba(124,111,247,.35);
+      margin-bottom: 14px;
+    }
+
+    /* Images dans la page */
+    .img-frame {
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: #0a0d16;
+      box-shadow: 0 12px 36px rgba(0,0,0,.45);
+      transition: transform .3s, box-shadow .3s;
+    }
+    .img-frame:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 50px rgba(0,0,0,.55), 0 0 40px rgba(124,111,247,.12);
+    }
+    .img-frame img {
+      width: 100%;
+      display: block;
+    }
+    .img-caption {
+      font-size: .78rem;
+      color: var(--muted);
+      text-align: center;
+      margin-top: 8px;
+      font-style: italic;
+    }
+
+    /* Grid d'images 2 colonnes */
+    .img-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    @media (max-width: 720px) {
+      .img-grid-2 { grid-template-columns: 1fr; }
+    }
+
+    /* Section bloc avec bordure gauche colorée */
+    .phase-block {
+      border-left: 3px solid var(--accent);
+      padding-left: 22px;
+      margin-bottom: 48px;
+    }
+    .phase-block.cyan { border-left-color: var(--accent2); }
+    .phase-block.orange { border-left-color: #f0522e; }
+
+    .phase-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    /* Images compactes avec texte à côté */
+    .img-inline {
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      gap: 20px;
+      align-items: start;
+      margin-bottom: 20px;
+    }
+    .img-inline.reverse {
+      grid-template-columns: 1fr 380px;
+    }
+    .img-inline.reverse .img-frame { order: 2; }
+    .img-inline.reverse .img-text  { order: 1; }
+    @media (max-width: 720px) {
+      .img-inline, .img-inline.reverse {
+        grid-template-columns: 1fr;
+      }
+      .img-inline.reverse .img-frame,
+      .img-inline.reverse .img-text { order: unset; }
+    }
+    .img-text h3 { margin-bottom: 8px; }
+    .img-text p  { margin: 0; }
+
+    /* Images SQL côte à côte compactes */
+    .img-row-compact {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    @media (max-width: 720px) {
+      .img-row-compact { grid-template-columns: 1fr; }
+    }
+    .img-row-compact .img-frame img {
+      max-height: 260px;
+      object-fit: cover;
+      object-position: top;
+    }
+
+    /* DAX compact : image petite + texte */
+    .dax-compact {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 16px;
+      align-items: start;
+      margin-bottom: 14px;
+    }
+    @media (max-width: 720px) {
+      .dax-compact { grid-template-columns: 1fr; }
+    }
+
+    /* Tag inline coloré */
+    .tag-sql   { border-color: rgba(0,212,255,.35); color: #6ee7ff; background: rgba(0,212,255,.07); }
+    .tag-bi    { border-color: rgba(255,180,0,.30); color: #ffd06b; background: rgba(255,180,0,.07); }
+    .tag-dax   { border-color: rgba(240,82,46,.30); color: #ff8a6e; background: rgba(240,82,46,.07); }
+    .tag-model { border-color: rgba(124,111,247,.35); color: #c4bbff; background: rgba(124,111,247,.09); }
+
+    /* Résultats KPI row */
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 14px;
+    }
+    @media (max-width: 720px) {
+      .kpi-row { grid-template-columns: 1fr; }
+    }
+    .kpi-card {
+      background: rgba(15,22,36,.85);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 20px;
+      text-align: center;
+    }
+    .kpi-value {
+      font-size: 1.6rem;
+      font-weight: 800;
+      font-family: var(--font-display);
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.1;
+      margin-bottom: 6px;
+    }
+    .kpi-label {
+      font-size: .82rem;
+      color: var(--muted);
+    }
+
+    /* Nav de projet (prev/next) */
+    .proj-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 28px 0 40px;
+      border-top: 1px solid var(--border);
+      margin-top: 48px;
+    }
+
+    /* Ligne décorative entre sections */
+    .section-sep {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 48px 0;
+    }
+  </style>
 </head>
 
 <body>
+
+  <!-- ═══ HEADER ═══ -->
   <header class="site-header">
     <div class="container header-inner">
       <a class="brand" href="index.html">
         <span class="brand-dot" aria-hidden="true"></span>
-        <span class="brand-text">Anthony</span>
+        <span class="brand-text">Anthony JATO WIRTH</span>
       </a>
-
       <nav class="nav">
         <a href="index.html#projects">Projets</a>
         <a href="index.html#skills">Compétences</a>
@@ -24,129 +245,287 @@
     </div>
   </header>
 
-  <main class="section">
+  <main>
     <div class="container">
-      <div class="breadcrumbs">
-        <a class="link" href="index.html">Accueil</a> <span class="sep">/</span> Toys and Models
+
+      <!-- ═══ BREADCRUMB ═══ -->
+      <div class="breadcrumbs" style="padding-top:28px;">
+        <a class="link" href="index.html">Accueil</a>
+        <span class="sep"> / </span>
+        <span style="color:var(--text);">Toys and Models</span>
       </div>
 
-      <div class="project-hero">
-        <div>
-          <h1>Toys and Models</h1>
-          <p class="lead">
-            Exploration d’une base relationnelle, création de tables/vues orientées BI, puis construction d’un dashboard Power BI interactif.
-          </p>
+      <!-- ═══ HERO PROJET ═══ -->
+      <section class="proj-hero">
+        <div class="proj-hero-inner">
 
-          <div class="chips">
-            <span class="chip">SQL</span>
-            <span class="chip">Modélisation BI</span>
-            <span class="chip">Power BI</span>
-            <span class="chip">DAX</span>
-            <span class="chip">Reporting</span>
-          </div>
-
-          <div class="row" style="margin-top: 16px;">
-            <a class="btn btn-sm" href="#" target="_blank" rel="noopener">Repo GitHub</a>
-            <a class="btn btn-sm btn-ghost" href="#" target="_blank" rel="noopener">Dashboard / PDF</a>
-          </div>
-        </div>
-
-        <div class="project-cover placeholder" aria-label="Visuel Toys and Models"></div>
-      </div>
-
-      <div class="grid-2" style="margin-top: 18px;">
-        <div class="card">
-          <div class="card-body">
-            <h2>Contexte</h2>
-            <p>
-              Toys and Models est un projet de reporting décisionnel basé sur une base de données transactionnelle
-              (clients, commandes, produits, paiements). L’objectif : fournir une lecture claire de la performance
-              commerciale via des KPIs fiables et filtrables.
+          <!-- Colonne texte -->
+          <div>
+            <div class="section-label">Projet Data • Reporting BI</div>
+            <h1 style="margin-bottom:14px;">Toys&nbsp;and&nbsp;Models</h1>
+            <p class="lead" style="margin-bottom:20px;">
+              Exploration d'une base relationnelle, modélisation en étoile, vues SQL orientées reporting,
+              puis construction d'un dashboard Power BI interactif avec mesures DAX avancées.
             </p>
-            <p class="muted small">
-              (Tu peux remplacer ce texte par le contexte exact de ton projet.)
-            </p>
-          </div>
-        </div>
 
-        <div class="card">
-          <div class="card-body">
-            <h2>Objectifs</h2>
-            <ul class="bullets">
-              <li>Comprendre le modèle relationnel et fiabiliser les jointures clés.</li>
-              <li>Créer des vues SQL “reporting-ready” (granularité, agrégations, dimensions).</li>
-              <li>Concevoir un modèle BI (type étoile) et des mesures DAX.</li>
-              <li>Produire un dashboard interactif (filtres, drill-down, KPIs).</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <section class="section" style="padding-left:0;padding-right:0;">
-        <div class="grid-2">
-          <div class="card">
-            <div class="card-body">
-              <h2>Travail SQL</h2>
-              <p>
-                Après exploration du schéma, j’ai construit un ensemble de <strong>vues SQL</strong> dédiées au reporting :
-                CA par période, performance par catégorie/produit, segmentation client, suivi des commandes et paiements.
-              </p>
-              <ul class="bullets">
-                <li>Jointures multi-tables (orders, orderdetails, customers, products, payments…)</li>
-                <li>Agrégations (mensuelles / trimestrielles), cohérence des totaux</li>
-                <li>Calculs de marges, panier moyen, top produits / top clients</li>
-                <li>Structuration d’un modèle de type étoile pour la BI</li>
-              </ul>
+            <div class="tags" style="margin-bottom:20px;">
+              <span class="tag tag-sql">SQL</span>
+              <span class="tag tag-model">Modélisation base de données</span>
+              <span class="tag tag-bi">Power BI</span>
+              <span class="tag tag-dax">DAX</span>
+              <span class="tag">Reporting</span>
             </div>
-          </div>
 
-          <div class="card">
-            <div class="card-body">
-              <h2>Power BI</h2>
-              <p>
-                Les vues ont été importées dans Power BI afin de construire un modèle analytique,
-                puis des mesures DAX pour rendre les KPIs comparables dans le temps.
-              </p>
-              <ul class="bullets">
-                <li>Modèle relationnel + tables de dates</li>
-                <li>Mesures DAX : CA, marge, croissance, panier moyen</li>
-                <li>Filtres, segments, drill-down par produit/client/pays</li>
-                <li>Pages dédiées : vue exécutive, ventes, produits, clients</li>
-              </ul>
-            </div>
-          </div>
-        </div>
 
-        <div class="card" style="margin-top:14px;">
-          <div class="card-body">
-            <h2>Résultats & apprentissages</h2>
-            <div class="grid-3">
-              <div class="mini">
-                <h3>Fiabilité</h3>
-                <p class="muted">Vues SQL reproductibles, totaux cohérents, logique de calcul documentée.</p>
+            <!-- KPIs visuels -->
+            <div class="kpi-row">
+              <div class="kpi-card">
+                <div class="kpi-value">8</div>
+                <div class="kpi-label">Tables sources</div>
               </div>
-              <div class="mini">
-                <h3>Lisibilité</h3>
-                <p class="muted">Dashboard orienté décision : KPIs, tendances, segments, comparaisons.</p>
+              <div class="kpi-card">
+                <div class="kpi-value">24</div>
+                <div class="kpi-label">Vues SQL créées</div>
               </div>
-              <div class="mini">
-                <h3>Scalabilité</h3>
-                <p class="muted">Modèle pensé pour ajouter de nouveaux indicateurs ou dimensions.</p>
+              <div class="kpi-card">
+                <div class="kpi-value">5</div>
+                <div class="kpi-label">Pages Power BI</div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div class="callout">
-          <strong>À ajouter :</strong> intègre ici 2–3 captures de ton dashboard (dans <code>assets/screens/</code>) et remplace le visuel placeholder.
+          <!-- Image accueil en hero -->
+          <div>
+            <div class="cover-wrap">
+              <img src="assets/accueil.png" alt="Vue d'ensemble du dashboard Power BI Toys and Models" loading="lazy" />
+              <span class="cover-badge">Dashboard</span>
+            </div>
+            <p class="img-caption">Page d'accueil du dashboard</p>
+          </div>
+
         </div>
       </section>
 
-      <div class="row" style="margin-top: 8px;">
-        <a class="btn btn-ghost" href="index.html#projects">← Retour</a>
-        <a class="btn" href="cinedata.html">Projet suivant : CinéData →</a>
+      <div class="section-sep"></div>
+
+      <!-- ═══ PHASE 1 — EXPLORATION SQL ═══ -->
+      <section>
+
+        <div class="phase-block">
+          <div class="phase-title">
+            <span class="step-number">1</span>
+            <div>
+              <div class="section-label" style="margin-bottom:2px;">Exploration</div>
+              <h2 style="margin:0;">Analyse du schéma relationnel</h2>
+            </div>
+          </div>
+
+          <div class="img-inline">
+            <div>
+              <div class="img-frame">
+                <img src="assets/capture_model.png" alt="Schéma relationnel de la base Toys and Models" />
+              </div>
+            </div>
+            <div class="img-text">
+              <p class="muted">
+                Première étape : comprendre la base transactionnelle (clients, commandes, produits, paiements),
+                identifier les clés étrangères et les potentielles relations.
+              </p>
+              <ul class="bullets" style="margin-top:10px;">
+                <li>8 tables sources : customers, orders, orderdetails, products, productlines, payments, employees, offices.</li>
+                <li>Relations many-to-one identifiées et documentées.</li>
+                <li>Clés primaires et étrangères vérifiées avant toutes jointures.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- ═══ PHASE 2 — CRÉATION DES VUES SQL ═══ -->
+        <div class="phase-block cyan">
+          <div class="phase-title">
+            <span class="step-number" style="background:linear-gradient(135deg,var(--accent2),#0099cc);">2</span>
+            <div>
+              <div class="section-label" style="margin-bottom:2px;color:var(--accent2);">SQL</div>
+              <h2 style="margin:0;">Construction des vues de reporting</h2>
+            </div>
+          </div>
+
+          <p class="muted" style="max-width:65ch; margin-bottom:24px;">
+            À partir du schéma, j'ai construit un ensemble de <strong style="color:var(--text);">vues SQL dédiées au reporting</strong> :
+            table de faits centrale, tables de dimensions, et vues analytiques complexes. 
+          </p>
+
+          <div class="img-row-compact" style="margin-bottom:16px;">
+            <div>
+              <div class="img-frame">
+                <img src="assets/creation_table.png" alt="Création des vues SQL" />
+              </div>
+              <p class="img-caption">fact_sales + dimensions</p>
+            </div>
+            <div>
+              <div class="img-frame">
+                <img src="assets/dim_date.png" alt="Table dim_date CTE récursive" />
+              </div>
+              <p class="img-caption">dim_date — CTE récursive</p>
+            </div>
+            <div>
+              <div class="img-frame">
+                <img src="assets/vue_complexe.png" alt="Vue CA mensuel par région" />
+              </div>
+              <p class="img-caption">CA mensuel + LAG() N/N-1</p>
+            </div>
+          </div>
+
+          <!-- Bullets récap -->
+          <div class="card" style="margin-top:20px;">
+            <div class="card-body">
+              <h3 style="margin-bottom:12px;">Ce que ces vues couvrent</h3>
+              <ul class="bullets">
+                <li>Jointures multi-tables (orders, orderdetails, customers, products, payments, employees, offices)</li>
+                <li>Construction de la logique métier via sous-requêtes SQL (<code>CTE</code> / <code>WITH</code>)</li>
+                <li>Calculs de marges, panier moyen, top produits / top clients</li>
+                <li>Taux d'évolution N/N-1 avec fonctions fenêtre (<code>LAG</code>, <code>PARTITION BY</code>)</li>
+                <li>Structuration en modèle étoile : 1 fact table + 5 dimensions + dim_date</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- ═══ PHASE 3 — POWER BI ═══ -->
+        <div class="phase-block" style="border-left-color:#fbbf24;">
+          <div class="phase-title">
+            <span class="step-number" style="background:linear-gradient(135deg,#f59e0b,#f0522e);">3</span>
+            <div>
+              <div class="section-label" style="margin-bottom:2px;color:#fbbf24;">Power BI</div>
+              <h2 style="margin:0;">Modèle analytique & dashboard interactif</h2>
+            </div>
+          </div>
+
+          <p class="muted" style="max-width:65ch; margin-bottom:24px;">
+            Les vues SQL ont été importées dans Power BI pour construire le modèle analytique (relations,
+            hiérarchies, table de dates), puis des mesures DAX pour rendre les KPIs comparables dans le temps.
+            Le dashboard couvre 5 pages dédiées : accueil, ventes, finance, RH, logistique.
+          </p>
+
+          <div class="img-frame" style="border-color:rgba(251,191,36,.25);box-shadow:0 16px 48px rgba(0,0,0,.5),0 0 60px rgba(251,191,36,.08);">
+            <img src="assets/powerBI.gif" alt="Navigation complète du dashboard Power BI" />
+          </div>
+          <p class="img-caption">Dashboard interactif — Démo live</p>
+
+          <div class="grid-2" style="margin-top:20px;">
+            <div class="card">
+              <div class="card-body">
+                <h3>Modèle de données</h3>
+                <ul class="bullets">
+                  <li>Schéma en étoile importé depuis les vues SQL</li>
+                  <li>Table de dates connectée pour toutes mesures temporelles</li>
+                  <li>Relations one-to-many correctement orientées</li>
+                </ul>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-body">
+                <h3>Pages du dashboard</h3>
+                <ul class="bullets">
+                  <li>Page d'accueil : Vue d'ensemble, KPIs à surveiller</li>
+                  <li>Ventes, Finance, RH et Logistique — pages dédiées par métier</li>
+                  <li>Informations appuyées avec des Visual Cards et mise en forme conditionnelles </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ═══ PHASE 4 — DAX ═══ -->
+        <div class="phase-block orange">
+          <div class="phase-title">
+            <span class="step-number" style="background:linear-gradient(135deg,#f0522e,#c0392b);">4</span>
+            <div>
+              <div class="section-label" style="margin-bottom:2px;color:#f0522e;">DAX</div>
+              <h2 style="margin:0;">Mesures avancées & mise en forme conditionnelle</h2>
+            </div>
+          </div>
+
+          <p class="muted" style="max-width:65ch; margin-bottom:24px;">
+            DAX a été utilisé à deux niveaux : des <strong style="color:var(--text);">calculs analytiques complexes</strong>
+            (croissance CA YTD vs N-1 avec <code>DATESYTD</code> et <code>DATEADD</code>)
+            et de la <strong style="color:var(--text);">mise en forme conditionnelle</strong>
+            (couleur dynamique selon le signe de la croissance).
+          </p>
+
+          <div class="dax-compact">
+            <div>
+              <div class="img-frame" style="border-color:rgba(240,82,46,.25);">
+                <img src="assets/dax1.png" alt="Mesure DAX CA Growth % Advanced" />
+              </div>
+              <p class="img-caption">Calcul YTD vs N-1</p>
+            </div>
+            <div class="img-text">
+              <h3 style="color:var(--text);margin-bottom:6px;">Calcul de croissance avancé</h3>
+              <p class="muted small">Mesure utilisant <code>DATESYTD</code> pour l'année en cours et <code>DATEADD(..., -1, YEAR)</code> pour l'année précédente. Le résultat est un ratio de croissance YTD comparable sur n'importe quelle période filtrée.</p>
+            </div>
+          </div>
+
+          <div class="dax-compact">
+            <div>
+              <div class="img-frame" style="border-color:rgba(240,82,46,.25);">
+                <img src="assets/dax2.png" alt="Mesure DAX CA Growth Color" />
+              </div>
+              <p class="img-caption">Couleur conditionnelle</p>
+            </div>
+            <div class="img-text">
+              <h3 style="color:var(--text);margin-bottom:6px;">Mise en forme conditionnelle</h3>
+              <p class="muted small">Mesure retournant un code hex dynamique — <code>#16A34A</code> (vert) si la croissance est positive, <code>#DC2626</code> (rouge) sinon. Utilisée directement dans les paramètres de formatage Power BI, sans colonne calculée.</p>
+            </div>
+          </div>
+
+          <div class="callout" style="margin-top:20px;border-left-color:#f0522e;border-color:rgba(240,82,46,.30);background:rgba(240,82,46,.06);">
+            <strong>À noter :</strong> certains calculs affichés utilisent des mesures DAX déjà pré-établies. 
+          </div>
+        </div>
+
+        <!-- ═══ RÉSULTATS ═══ -->
+        <div class="section-sep"></div>
+
+        <div style="margin-bottom:48px;">
+          <div class="section-label">Bilan</div>
+          <h2 style="margin-bottom:6px;">Résultats & apprentissages</h2>
+          <p class="muted" style="margin-bottom:22px;">Ce que ce projet m'a appris et ce qu'il démontre.</p>
+
+          <div class="grid-3">
+            <div class="card card-hi">
+              <div class="card-body">
+                <div style="font-size:1.5rem;margin-bottom:8px;">🔒</div>
+                <h3>Fiabilité</h3>
+                <p class="muted small">Vues SQL reproductibles, totaux cohérents entre SQL et Power BI, logique de calcul documentée et versionnable.</p>
+              </div>
+            </div>
+            <div class="card card-hi">
+              <div class="card-body">
+                <div style="font-size:1.5rem;margin-bottom:8px;">📊</div>
+                <h3>Lisibilité</h3>
+                <p class="muted small">Dashboard orienté décision : KPIs en premier plan, tendances, comparaisons N/N-1, segmentation par pays et catégorie.</p>
+              </div>
+            </div>
+            <div class="card card-hi">
+              <div class="card-body">
+                <div style="font-size:1.5rem;margin-bottom:8px;">⚙️</div>
+                <h3>Scalabilité</h3>
+                <p class="muted small">Modèle en étoile pensé pour accueillir de nouvelles dimensions ou indicateurs sans refonte du schéma.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ═══ NAVIGATION PROJET ═══ -->
+      <div class="proj-nav">
+        <a class="btn btn-ghost btn-sm" href="index.html#projects">← Retour aux projets</a>
+        <a class="btn btn-sm" href="cinedata.html">Projet suivant : CinéData →</a>
       </div>
-    </div>
+
+    </div><!-- /container -->
   </main>
 
   <footer class="footer">
@@ -159,5 +538,6 @@
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
   </script>
+
 </body>
 </html>
