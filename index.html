@@ -74,8 +74,8 @@
         <aside class="hero-card card" style="overflow:hidden;">
           <img src="assets/profile.png" 
                alt="Photo de profil"
-               style="width:100%; height:280px; object-fit:cover; object-position:center 15%; display:block; border-radius:22px 22px 0 0;">
-          <div class="card-body">
+               style="width:100%; height:380px; object-fit:cover; object-position:center 15%; display:block; border-radius:22px 22px 0 0;">
+          <div class="card-body" style="font-size: 0.75rem;">
             <h2 class="card-title">Junior Data Analyst / Former Financial Advisor </h2>
             <p class="muted">
               <hr>
@@ -122,15 +122,24 @@
           <div class="card">
             <div class="card-body">
               <h3>Ce qui me caractérise</h3>
-              <ul class="bullets">
-                <br>
-                <li><strong>Exigence & fiabilité :</strong> je challenge les chiffres, je vérifie les hypothèses et j’évite les conclusions hâtives.</li>
-                <br>
-                <li><strong>Vision “métier” :</strong> j’essaie de relier la donnée à une décision concrète (KPI, performance, objectifs ?).</li>
-                <br>
-                <li><strong>Exécution technique :</strong> je passe de la donnée brute à un véritable livrable exploitable.</li>
-                <br>
-                <li><strong>Clarté :</strong> Mes dashboards sont lisibles et mes analyses expliquées, le but étant de justifier et de vulgariser le moindre de mes choix.</li>
+              <br>
+              <ul class="about-bullets">
+                <li>
+                  <span class="about-label"><span class="about-dot"></span>Exigence & fiabilité</span>
+                  <span class="about-text">Je challenge les chiffres, je vérifie les hypothèses et j'évite les conclusions hâtives.</span>
+                </li>
+                <li>
+                  <span class="about-label"><span class="about-dot"></span>Vision "métier"</span>
+                  <span class="about-text">J'essaie de relier la donnée à une décision concrète (KPI, performance, objectifs ?).</span>
+                </li>
+                <li>
+                  <span class="about-label"><span class="about-dot"></span>Exécution technique</span>
+                  <span class="about-text">Je passe de la donnée brute à un véritable livrable exploitable.</span>
+                </li>
+                <li>
+                  <span class="about-label"><span class="about-dot"></span>Clarté</span>
+                  <span class="about-text">Dashboards lisibles, analyses expliquées — je justifie et vulgarise chacun de mes choix.</span>
+                </li>
               </ul>
             </div>
           </div>
@@ -146,25 +155,46 @@
         </div>
 
         <div class="skills-grid">
-          <div class="card">
+
+          <!-- Langages & Programmation -->
+          <div class="card skill-card skill-lang">
+            <div class="skill-bg" aria-hidden="true">
+              <svg viewBox="0 0 160 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <text x="12" y="90" font-family="monospace" font-size="80" fill="currentColor" opacity=".10">{</text>
+                <text x="95" y="90" font-family="monospace" font-size="80" fill="currentColor" opacity=".10">}</text>
+                <text x="58" y="76" font-family="monospace" font-size="28" fill="currentColor" opacity=".13">&gt;_</text>
+              </svg>
+            </div>
             <div class="card-body">
               <h3>Langages & Programmation</h3>
               <div class="tags">
-                <span class="tag">Python</span>
-                <span class="tag">SQL</span>
+                <span class="tag tag-python">Python</span>
+                <span class="tag tag-sql">SQL</span>
                 <span class="tag">Bash</span>
-                <span class="tag">Git</span>
-                <span class="tag">GitHub</span>
+                <span class="tag tag-git">Git</span>
+                <span class="tag tag-git">GitHub</span>
               </div>
             </div>
           </div>
 
-          <div class="card">
+          <!-- Analyse & Manipulation -->
+          <div class="card skill-card skill-analyse">
+            <div class="skill-bg" aria-hidden="true">
+              <svg viewBox="0 0 160 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="28" y="72" width="20" height="36" rx="4" fill="currentColor" opacity=".13"/>
+                <rect x="56" y="48" width="20" height="60" rx="4" fill="currentColor" opacity=".16"/>
+                <rect x="84" y="58" width="20" height="50" rx="4" fill="currentColor" opacity=".13"/>
+                <rect x="112" y="32" width="20" height="76" rx="4" fill="currentColor" opacity=".16"/>
+                <line x1="18" y1="110" x2="142" y2="110" stroke="currentColor" stroke-width="1.5" opacity=".12"/>
+                <circle cx="80" cy="22" r="12" stroke="currentColor" stroke-width="2" opacity=".14" fill="none"/>
+                <line x1="89" y1="31" x2="97" y2="40" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity=".14"/>
+              </svg>
+            </div>
             <div class="card-body">
               <h3>Analyse & Manipulation</h3>
               <div class="tags">
-                <span class="tag">Pandas</span>
-                <span class="tag">NumPy</span>
+                <span class="tag tag-python">Pandas</span>
+                <span class="tag tag-python">NumPy</span>
                 <span class="tag">Data Cleaning</span>
                 <span class="tag">EDA</span>
                 <span class="tag">Feature Engineering</span>
@@ -173,15 +203,25 @@
             </div>
           </div>
 
-          <div class="card">
+          <!-- Base de données -->
+          <div class="card skill-card skill-db">
+            <div class="skill-bg" aria-hidden="true">
+              <svg viewBox="0 0 160 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <ellipse cx="80" cy="28" rx="44" ry="14" stroke="currentColor" stroke-width="2" opacity=".16" fill="currentColor" fill-opacity=".05"/>
+                <line x1="36" y1="28" x2="36" y2="90" stroke="currentColor" stroke-width="2" opacity=".14"/>
+                <line x1="124" y1="28" x2="124" y2="90" stroke="currentColor" stroke-width="2" opacity=".14"/>
+                <ellipse cx="80" cy="56" rx="44" ry="14" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5 3" opacity=".11" fill="none"/>
+                <ellipse cx="80" cy="90" rx="44" ry="14" stroke="currentColor" stroke-width="2" opacity=".16" fill="currentColor" fill-opacity=".05"/>
+              </svg>
+            </div>
             <div class="card-body">
               <h3>Base de données</h3>
               <div class="tags">
-                <span class="tag">MySQL</span>
-                <span class="tag">PostgreSQL</span>
-                <span class="tag">SQLite</span>
+                <span class="tag tag-sql">MySQL</span>
+                <span class="tag tag-sql">PostgreSQL</span>
+                <span class="tag tag-sql">SQLite</span>
                 <span class="tag">Schéma relationnel</span>
-                <span class="tag">Vues SQL</span>
+                <span class="tag tag-sql">Vues SQL</span>
                 <span class="tag">Window functions</span>
                 <span class="tag">Index</span>
                 <span class="tag">Optimisation requêtes</span>
@@ -189,26 +229,60 @@
             </div>
           </div>
 
-          <div class="card">
+          <!-- BI & Visualisation -->
+          <div class="card skill-card skill-bi">
+            <div class="skill-bg" aria-hidden="true">
+              <svg viewBox="0 0 160 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M80 60 L80 18 A42 42 0 0 1 116 81 Z" fill="currentColor" opacity=".16"/>
+                <path d="M80 60 L116 81 A42 42 0 0 1 44 81 Z" fill="currentColor" opacity=".10"/>
+                <path d="M80 60 L44 81 A42 42 0 0 1 80 18 Z" fill="currentColor" opacity=".07"/>
+                <circle cx="80" cy="60" r="42" stroke="currentColor" stroke-width="1.5" opacity=".13" fill="none"/>
+                <polyline points="20,108 38,92 55,99 72,80 90,86 108,68 128,74 145,55" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity=".15"/>
+              </svg>
+            </div>
             <div class="card-body">
               <h3>BI & Visualisation</h3>
               <div class="tags">
-                <span class="tag">Power BI</span>
-                <span class="tag">DAX</span>
-                <span class="tag">Data Modeling</span>
+                <span class="tag tag-bi">Power BI</span>
+                <span class="tag tag-dax">DAX</span>
+                <span class="tag tag-bi">Data Modeling</span>
                 <span class="tag">Matplotlib</span>
                 <span class="tag">Seaborn</span>
-                <span class="tag">Streamlit</span>
+                <span class="tag tag-stream">Streamlit</span>
               </div>
             </div>
           </div>
 
-          <div class="card">
+          <!-- Machine Learning -->
+          <div class="card skill-card skill-ml">
+            <div class="skill-bg" aria-hidden="true">
+              <svg viewBox="0 0 160 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <line x1="28" y1="36" x2="80" y2="24" stroke="currentColor" stroke-width="1" opacity=".13"/>
+                <line x1="28" y1="36" x2="80" y2="60" stroke="currentColor" stroke-width="1" opacity=".13"/>
+                <line x1="28" y1="36" x2="80" y2="96" stroke="currentColor" stroke-width="1" opacity=".13"/>
+                <line x1="28" y1="84" x2="80" y2="24" stroke="currentColor" stroke-width="1" opacity=".13"/>
+                <line x1="28" y1="84" x2="80" y2="60" stroke="currentColor" stroke-width="1" opacity=".13"/>
+                <line x1="28" y1="84" x2="80" y2="96" stroke="currentColor" stroke-width="1" opacity=".13"/>
+                <line x1="80" y1="24" x2="132" y2="36" stroke="currentColor" stroke-width="1" opacity=".13"/>
+                <line x1="80" y1="24" x2="132" y2="84" stroke="currentColor" stroke-width="1" opacity=".13"/>
+                <line x1="80" y1="60" x2="132" y2="36" stroke="currentColor" stroke-width="1" opacity=".13"/>
+                <line x1="80" y1="60" x2="132" y2="84" stroke="currentColor" stroke-width="1" opacity=".13"/>
+                <line x1="80" y1="96" x2="132" y2="36" stroke="currentColor" stroke-width="1" opacity=".13"/>
+                <line x1="80" y1="96" x2="132" y2="84" stroke="currentColor" stroke-width="1" opacity=".13"/>
+                <circle cx="28" cy="36" r="8" fill="currentColor" opacity=".18"/>
+                <circle cx="28" cy="84" r="8" fill="currentColor" opacity=".18"/>
+                <circle cx="80" cy="24" r="8" fill="currentColor" opacity=".15"/>
+                <circle cx="80" cy="60" r="8" fill="currentColor" opacity=".15"/>
+                <circle cx="80" cy="96" r="8" fill="currentColor" opacity=".15"/>
+                <circle cx="132" cy="36" r="8" fill="currentColor" opacity=".18"/>
+                <circle cx="132" cy="84" r="8" fill="currentColor" opacity=".18"/>
+              </svg>
+            </div>
             <div class="card-body">
               <h3>Machine Learning</h3>
               <div class="tags">
-                <span class="tag">Scikit-learn</span>
-                <span class="tag">Nearest Neighbors</span>
+                <span class="tag tag-ml">Scikit-learn</span>
+                <span class="tag tag-ml">Nearest Neighbors</span>
                 <span class="tag">Classification</span>
                 <span class="tag">Régression</span>
                 <span class="tag">Clustering</span>
@@ -219,19 +293,40 @@
             </div>
           </div>
 
-          <div class="card">
+          <!-- Data Engineering -->
+          <div class="card skill-card skill-eng">
+            <div class="skill-bg" aria-hidden="true">
+              <svg viewBox="0 0 160 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="10"  y="50" width="34" height="16" rx="8" fill="currentColor" opacity=".14"/>
+                <rect x="63"  y="50" width="34" height="16" rx="8" fill="currentColor" opacity=".14"/>
+                <rect x="116" y="50" width="34" height="16" rx="8" fill="currentColor" opacity=".14"/>
+                <line x1="44" y1="58" x2="63" y2="58" stroke="currentColor" stroke-width="2" stroke-dasharray="3 2" opacity=".16"/>
+                <line x1="97" y1="58" x2="116" y2="58" stroke="currentColor" stroke-width="2" stroke-dasharray="3 2" opacity=".16"/>
+                <circle cx="80" cy="22" r="14" stroke="currentColor" stroke-width="2" opacity=".14" fill="none"/>
+                <circle cx="80" cy="22" r="6"  stroke="currentColor" stroke-width="2" opacity=".14" fill="none"/>
+                <line x1="80" y1="4"  x2="80" y2="10" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity=".15"/>
+                <line x1="80" y1="34" x2="80" y2="40" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity=".15"/>
+                <line x1="62" y1="22" x2="68" y2="22" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity=".15"/>
+                <line x1="92" y1="22" x2="98" y2="22" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity=".15"/>
+                <line x1="67" y1="9"  x2="71" y2="13" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity=".15"/>
+                <line x1="89" y1="31" x2="93" y2="35" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity=".15"/>
+                <line x1="67" y1="35" x2="71" y2="31" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity=".15"/>
+                <line x1="89" y1="13" x2="93" y2="9"  stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity=".15"/>
+              </svg>
+            </div>
             <div class="card-body">
               <h3>Data Engineering (fondamentaux)</h3>
               <div class="tags">
                 <span class="tag">ETL / ELT</span>
                 <span class="tag">Pipelines</span>
                 <span class="tag">CSV / JSON</span>
-                <span class="tag">APIs REST</span>
+                <span class="tag tag-ml">APIs REST</span>
                 <span class="tag">Qualité des données</span>
                 <span class="tag">Notions Docker</span>
               </div>
             </div>
           </div>
+
         </div>
 
         <div class="note">
@@ -309,7 +404,7 @@
           <div class="card-body contact">
             <div>
               <p class="muted">Email</p>
-              <p><a class="link" href="/cdn-cgi/l/email-protection#5b3a352f3334352275313a2f34752c32292f331b3c363a323775383436"><span class="__cf_email__" data-cfemail="9dfcf3e9f5f2f3e4b3f7fce9f2b3eaf4efe9f5ddfaf0fcf4f1b3fef2f0">[email&#160;protected]</span></a></p>
+              <p><a class="link" href="anthony.jato.wirth@gmail.com"><span class="__cf_email__" data-cfemail="9dfcf3e9f5f2f3e4b3f7fce9f2b3eaf4efe9f5ddfaf0fcf4f1b3fef2f0">anthony.jato.wirth@gmail.com</span></a></p>
             </div>
             <div>
               <p class="muted">LinkedIn</p>
