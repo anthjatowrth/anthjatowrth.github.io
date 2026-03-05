@@ -450,7 +450,7 @@ code{
 .tag-dax    { border-color: rgba(240,82,46,.30);  color: #ff8a6e; background: rgba(240,82,46,.07); }
 .tag-model  { border-color: rgba(124,111,247,.35); color: #c4bbff; background: rgba(124,111,247,.09); }
 .tag-python { border-color: rgba(255,212,0,.30);  color: #ffe066; background: rgba(255,212,0,.07); }
-.tag-ml     { border-color: rgba(0,212,255,.35);  color: #6ee7ff; background: rgba(0,212,255,.07); }
+.tag-ml     { border-color: rgba(124,111,247,.35); color: #c4bbff; background: rgba(124,111,247,.09); }
 .tag-stream { border-color: rgba(255,75,105,.30); color: #ff9db0; background: rgba(255,75,105,.07); }
 .tag-git    { border-color: rgba(34,197,94,.30);  color: #86efac; background: rgba(34,197,94,.07); }
 .tag-imdb   { border-color: rgba(251,191,36,.30); color: #fcd34d; background: rgba(251,191,36,.07); }
@@ -463,6 +463,38 @@ code{
 }
 @media (max-width: 980px){
   .skills-grid{ grid-template-columns: 1fr; }
+}
+
+/* ========== Tag legend ========== */
+.tag-legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 5px 14px;
+  margin-top: 12px;
+  font-size: .75rem;
+  color: var(--muted);
+  opacity: .65;
+}
+.tag-legend-title {
+  font-weight: 600;
+  font-family: var(--font-display);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  font-size: .7rem;
+  margin-right: 2px;
+}
+.tag-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.tag-legend-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  flex-shrink: 0;
+  opacity: .85;
 }
 
 /* ========== Note / Callout ========== */
@@ -724,7 +756,7 @@ code{
 .skill-card .tag-dax    { background: rgba(240,82,46,.18); }
 .skill-card .tag-model  { background: rgba(124,111,247,.18); }
 .skill-card .tag-python { background: rgba(255,212,0,.18); }
-.skill-card .tag-ml     { background: rgba(0,212,255,.18); }
+.skill-card .tag-ml     { background: rgba(124,111,247,.18); }
 .skill-card .tag-stream { background: rgba(255,75,105,.18); }
 .skill-card .tag-git    { background: rgba(34,197,94,.18); }
 
