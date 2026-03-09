@@ -28,9 +28,10 @@
 
 *{ box-sizing:border-box; }
 html, body{ height:100%; }
-
+html{ overflow-x: hidden; }
 body{
   margin:0;
+  overflow-x: hidden;
   font-family: var(--font-body);
   background:
     radial-gradient(ellipse 900px 500px at 10% 0%,  rgba(124,111,247,.20), transparent 60%),
@@ -97,6 +98,11 @@ code{
   margin-inline: auto;
   position: relative;
   z-index: 1;
+}
+
+@media (max-width: 480px){
+  .container{ width: min(100% - 24px, var(--max)); }
+  .section{ padding: 48px 0; }
 }
 
 .section{ padding: 72px 0; }
@@ -180,8 +186,18 @@ code{
 }
 
 @media (max-width: 720px){
-  .nav{ gap: 4px; flex-wrap:wrap; justify-content:flex-end; }
-  .nav a{ font-size:.88rem; }
+  .nav{ gap: 4px; flex-wrap: wrap; justify-content: flex-end; }
+  .nav a{ font-size: .88rem; padding: 6px 10px; }
+}
+
+@media (max-width: 540px){
+  .header-inner{ flex-wrap: wrap; justify-content: center; gap: 10px; padding: 12px 0; }
+  .brand{ font-size: .9rem; }
+  .nav{ width: 100%; justify-content: center; }
+}
+
+@media (max-width: 380px){
+  .nav a{ font-size: .8rem; padding: 5px 8px; }
 }
 
 /* ========== Hero ========== */
@@ -191,6 +207,18 @@ code{
   grid-template-columns: 1.35fr .65fr;
   gap: 20px;
   align-items: start;
+}
+
+@media (max-width: 900px){
+  .hero{ padding: 48px 0 20px; }
+}
+
+@media (max-width: 540px){
+  .hero{ padding: 32px 0 16px; }
+  .hero .lead{ font-size: 1rem; }
+  .chips{ gap: 6px; }
+  .chip{ font-size: .8rem; padding: 5px 10px; }
+  .links-row{ gap: 12px; }
 }
 
 /* hero-grid aside — handled inline on the card */
@@ -390,8 +418,14 @@ code{
 }
 @media (max-width: 900px){
   .hero-grid{ grid-template-columns: 1fr; }
+  .hero-grid .hero-card{ max-width: 320px; margin-inline: auto; }
+  .hero-card img{ height: 280px !important; }
   .grid-2{ grid-template-columns: 1fr; }
   .grid-3{ grid-template-columns: 1fr; }
+}
+
+@media (max-width: 480px){
+  .hero-card img{ height: 240px !important; }
 }
 
 /* ========== Tags & Lists ========== */
@@ -497,6 +531,10 @@ code{
   opacity: .85;
 }
 
+@media (max-width: 540px){
+  .tag-legend{ gap: 6px 10px; font-size: .7rem; }
+}
+
 /* ========== Note / Callout ========== */
 .note{
   margin-top: 18px;
@@ -557,6 +595,12 @@ code{
   border-bottom: 1px solid var(--border);
   overflow: hidden;
   position: relative;
+}
+.project-media img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 /* Hover shimmer sur project-media */
 .project-media::after{
@@ -671,9 +715,19 @@ code{
 .hero-title span {
   display: block;
 }
-.hero-title span:nth-child(1) { margin-left: 0px; }
+.hero-title span:nth-child(1) { margin-left: 0; }
 .hero-title span:nth-child(2) { margin-left: 40px; }
 .hero-title span:nth-child(3) { margin-left: 80px; }
+
+@media (max-width: 640px){
+  .hero-title span:nth-child(2) { margin-left: 20px; }
+  .hero-title span:nth-child(3) { margin-left: 40px; }
+}
+
+@media (max-width: 420px){
+  .hero-title span:nth-child(2),
+  .hero-title span:nth-child(3) { margin-left: 0; }
+}
 .hero .kicker{
   animation: fade-up .5s cubic-bezier(.22,1,.36,1) both;
 }
