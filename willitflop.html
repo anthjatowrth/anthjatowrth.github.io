@@ -1,0 +1,559 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>WillItFlop — Projet | Anthony</title>
+  <meta name="description" content="WillItFlop : application full-stack de prédiction du succès commercial des jeux indépendants Steam. Pipeline ETL Prefect, XGBoost, FastAPI, React." />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+
+    .proj-hero { padding: 52px 0 36px; }
+    .proj-hero-inner {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 22px; align-items: start;
+    }
+    @media (max-width: 860px) { .proj-hero-inner { grid-template-columns: 1fr; } }
+
+    .cover-wrap {
+      border-radius: 20px; overflow: hidden;
+      border: 1px solid var(--border-hi);
+      box-shadow: 0 24px 60px rgba(0,0,0,.55), 0 0 60px rgba(124,111,247,.12);
+      position: relative;
+    }
+    .cover-wrap img { width: 100%; display: block; }
+
+    .step-number {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 36px; height: 36px; border-radius: 12px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff; font-weight: 800; font-size: .92rem;
+      font-family: var(--font-display); flex-shrink: 0;
+      box-shadow: 0 4px 16px rgba(124,111,247,.35);
+    }
+
+    .img-frame {
+      border-radius: 14px; overflow: hidden;
+      border: 1px solid var(--border); background: #0a0d16;
+      box-shadow: 0 12px 36px rgba(0,0,0,.45);
+      transition: transform .3s, box-shadow .3s;
+    }
+    .img-frame:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 20px 50px rgba(0,0,0,.55), 0 0 30px rgba(124,111,247,.12);
+    }
+    .img-frame img { width: 100%; display: block; }
+    .img-caption {
+      font-size: .78rem; color: var(--muted);
+      text-align: center; margin-top: 7px; font-style: italic;
+    }
+
+    .phase-block {
+      border-left: 3px solid var(--accent);
+      padding-left: 22px; margin-bottom: 44px;
+    }
+    .phase-title { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+
+    .img-inline {
+      display: grid; grid-template-columns: 340px 1fr;
+      gap: 20px; align-items: start; margin-bottom: 16px;
+    }
+    @media (max-width: 760px) { .img-inline { grid-template-columns: 1fr; } }
+
+    /* Pipeline */
+    .pipeline {
+      display: grid; grid-template-columns: repeat(5, 1fr);
+      gap: 0; margin: 18px 0 20px;
+    }
+    @media (max-width: 760px) { .pipeline { grid-template-columns: 1fr; } }
+    .pipe-step {
+      background: rgba(15,22,36,.85);
+      border: 1px solid var(--border);
+      padding: 14px 10px; text-align: center; position: relative;
+    }
+    .pipe-step:first-child { border-radius: 12px 0 0 12px; }
+    .pipe-step:last-child  { border-radius: 0 12px 12px 0; }
+    .pipe-step + .pipe-step { border-left: none; }
+    .pipe-step:not(:last-child)::after {
+      content: '→'; position: absolute; right: -10px; top: 50%;
+      transform: translateY(-50%); color: var(--accent); font-size: .85rem; z-index: 2;
+    }
+    .pipe-label {
+      font-size: .68rem; font-weight: 700; letter-spacing: .07em;
+      text-transform: uppercase; color: var(--accent2);
+      font-family: var(--font-display); margin-bottom: 5px;
+    }
+    .pipe-desc { font-size: .75rem; color: var(--muted); line-height: 1.35; }
+
+    /* Architecture pipeline étendu */
+    .arch-pipeline {
+      display: grid; grid-template-columns: repeat(6, 1fr);
+      gap: 0; margin: 18px 0 20px;
+    }
+    @media (max-width: 900px) { .arch-pipeline { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 560px) { .arch-pipeline { grid-template-columns: 1fr; } }
+    .arch-step {
+      background: rgba(15,22,36,.85);
+      border: 1px solid var(--border);
+      padding: 16px 10px; text-align: center; position: relative;
+    }
+    .arch-step:first-child { border-radius: 12px 0 0 12px; }
+    .arch-step:last-child  { border-radius: 0 12px 12px 0; }
+    .arch-step + .arch-step { border-left: none; }
+    .arch-step:not(:last-child)::after {
+      content: '→'; position: absolute; right: -10px; top: 50%;
+      transform: translateY(-50%); color: var(--accent); font-size: .85rem; z-index: 2;
+    }
+    .arch-icon { font-size: 1.3rem; margin-bottom: 6px; }
+    .arch-label {
+      font-size: .7rem; font-weight: 700; letter-spacing: .06em;
+      text-transform: uppercase; color: var(--accent2);
+      font-family: var(--font-display); margin-bottom: 4px;
+    }
+    .arch-desc { font-size: .72rem; color: var(--muted); line-height: 1.3; }
+
+    /* Librairies */
+    .lib-grid {
+      display: grid; grid-template-columns: repeat(6, 1fr);
+      gap: 10px; margin-top: 16px;
+    }
+    @media (max-width: 960px) { .lib-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 560px) { .lib-grid { grid-template-columns: repeat(2, 1fr); } }
+    .lib-card {
+      background: rgba(15,22,36,.85); border: 1px solid var(--border);
+      border-radius: 14px; padding: 16px 12px; text-align: center;
+      transition: border-color .2s, transform .2s;
+    }
+    .lib-card:hover { border-color: rgba(124,111,247,.3); transform: translateY(-2px); }
+    .lib-icon { font-size: 1.4rem; margin-bottom: 6px; }
+    .lib-name { font-size: .82rem; font-weight: 700; font-family: var(--font-display); color: var(--text); margin-bottom: 4px; }
+    .lib-desc { font-size: .73rem; color: var(--muted); line-height: 1.4; }
+
+    /* KPIs */
+    .kpi-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 14px; }
+    @media (max-width: 720px) { .kpi-row { grid-template-columns: 1fr; } }
+    .kpi-row-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 20px; }
+    @media (max-width: 720px) { .kpi-row-4 { grid-template-columns: repeat(2, 1fr); } }
+    .kpi-card { background: rgba(15,22,36,.85); border: 1px solid var(--border); border-radius: 16px; padding: 18px; text-align: center; }
+    .kpi-value {
+      font-size: 1.5rem; font-weight: 800; font-family: var(--font-display);
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text; line-height: 1.1; margin-bottom: 5px;
+    }
+    .kpi-label { font-size: .8rem; color: var(--muted); }
+
+    .section-sep { height:1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin: 44px 0; }
+    .proj-nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 28px 0 40px; border-top: 1px solid var(--border); margin-top: 44px;
+    }
+
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">
+        <span class="brand-dot" aria-hidden="true"></span>
+        <span class="brand-text">Anthony JATO WIRTH</span>
+      </a>
+      <nav class="nav">
+        <a href="index.html#projects">Projets</a>
+        <a href="index.html#skills">Compétences</a>
+        <a class="btn btn-sm" href="index.html#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+
+      <!-- BREADCRUMBS -->
+      <div class="breadcrumbs" style="padding-top:28px;">
+        <a class="link" href="index.html">Accueil</a>
+        <span class="sep"> / </span>
+        <span style="color:var(--text);">WillItFlop</span>
+      </div>
+
+      <!-- HERO -->
+      <section class="proj-hero">
+        <div class="proj-hero-inner">
+
+          <!-- Colonne gauche -->
+          <div>
+            <div class="section-label">Projet Data • Machine Learning • Full-Stack</div>
+            <h1 style="margin-bottom:14px;">WillItFlop</h1>
+            <p class="lead" style="margin-bottom:16px;">
+              Application full-stack de prédiction du succès commercial des jeux indépendants Steam.
+              Pipeline ETL automatisé (Prefect), modèle XGBoost entraîné sur 13 600+ jeux,
+              API FastAPI et interface React interactive.
+            </p>
+
+            <div class="tags" style="margin-bottom:16px;">
+              <span class="tag tag-sql">Python</span>
+              <span class="tag tag-ml">XGBoost</span>
+              <span class="tag tag-python">FastAPI</span>
+              <span class="tag tag-python">React</span>
+              <span class="tag tag-python">Tailwind CSS</span>
+              <span class="tag tag-bi">dbt</span>
+              <span class="tag tag-bi">PostgreSQL</span>
+              <span class="tag tag-ml">Prefect</span>
+              <span class="tag tag-bi">Supabase</span>
+              <span class="tag tag-ml">GitHub Actions</span>
+              <span class="tag tag-python">Scikit-learn</span>
+              <span class="tag tag-ml">Pollinations.ai</span>
+              <span class="tag tag-ml">Groq / Llama 3</span>
+            </div>
+
+            <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;">
+              <a class="btn btn-primary btn-sm" href="https://willit-flop.vercel.app/" target="_blank" rel="noopener">↗ Voir l'application</a>
+              <a class="btn btn-ghost btn-sm" href="https://github.com/anthjatowrth/WillitFlop" target="_blank" rel="noopener">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+                Repo GitHub
+              </a>
+            </div>
+
+            <div class="kpi-row">
+              <div class="kpi-card">
+                <div class="kpi-value">13 600+</div>
+                <div class="kpi-label">Jeux analysés</div>
+              </div>
+              <div class="kpi-card">
+                <div class="kpi-value">0.83</div>
+                <div class="kpi-label">ROC-AUC (5-fold CV)</div>
+              </div>
+              <div class="kpi-card">
+                <div class="kpi-value">5</div>
+                <div class="kpi-label">Sources de données</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Colonne droite -->
+          <div>
+            <div class="cover-wrap">
+              <img src="assets/willitflop_home.png" alt="Page d'accueil WillItFlop" />
+            </div>
+            <p class="img-caption">Page d'accueil — WillItFlop, déployée sur Vercel</p>
+            <div class="callout" style="padding:11px 16px;margin-top:14px;">
+              <strong style="color:#86efac;">Projet le plus ambitieux du bootcamp</strong> —
+              Architecture complète : ETL automatisé, ML, API REST, frontend React, CI/CD avec GitHub Actions.
+              Tout le code est versionné et déployé en production.
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <div class="section-sep"></div>
+
+      <section>
+
+        <!-- PHASE 1 — DATA PIPELINE ETL -->
+        <div class="phase-block">
+          <div class="phase-title">
+            <span class="step-number">1</span>
+            <div>
+              <div class="section-label" style="margin-bottom:2px;">Data Engineering</div>
+              <h2 style="margin:0;">Pipeline ETL automatisé avec Prefect</h2>
+            </div>
+          </div>
+
+          <p class="muted" style="max-width:68ch;margin-bottom:18px;">
+            La pipeline collecte les données depuis 3 APIs (Steam, SteamSpy, Twitch), nettoie et transforme
+            les prix, textes et KPIs, puis alimente une base PostgreSQL. L'orchestration est assurée par
+            <strong style="color:var(--text);">Prefect Cloud</strong>, déclenchée hebdomadairement via
+            <strong style="color:var(--text);">GitHub Actions</strong>. dbt reconstruit ensuite les tables
+            de features pour le ML et les marts d'analyse de sentiment.
+          </p>
+
+          <div class="pipeline">
+            <div class="pipe-step">
+              <div class="pipe-label">COLLECT</div>
+              <div class="pipe-desc">Nouveaux jeux Steam + SteamSpy + Twitch</div>
+            </div>
+            <div class="pipe-step">
+              <div class="pipe-label">CLEAN</div>
+              <div class="pipe-desc">Prix NULL → médiane, textes nettoyés</div>
+            </div>
+            <div class="pipe-step">
+              <div class="pipe-label">UPDATE</div>
+              <div class="pipe-desc">Refresh jeux récents et anciens</div>
+            </div>
+            <div class="pipe-step">
+              <div class="pipe-label">DBT</div>
+              <div class="pipe-desc">Features ML + marts sentiment</div>
+            </div>
+            <div class="pipe-step">
+              <div class="pipe-label">DEPLOY</div>
+              <div class="pipe-desc">CI/CD GitHub Actions</div>
+            </div>
+          </div>
+
+          <div class="img-frame" style="margin-top:20px;">
+            <img src="assets/willitflop_market.png" alt="Dashboard Market Intelligence WillItFlop" />
+          </div>
+          <p class="img-caption">Dashboard Market Intelligence — analyse du catalogue Steam avec KPIs en temps réel</p>
+        </div>
+
+        <!-- PHASE 2 — MACHINE LEARNING -->
+        <div class="phase-block" style="border-left-color:var(--accent2);">
+          <div class="phase-title">
+            <span class="step-number" style="background:linear-gradient(135deg,var(--accent2),#0099cc);">2</span>
+            <div>
+              <div class="section-label" style="margin-bottom:2px;color:var(--accent2);">Machine Learning</div>
+              <h2 style="margin:0;">XGBoost classifier — prédiction de succès commercial</h2>
+            </div>
+          </div>
+
+          <div class="img-inline">
+            <div>
+              <div class="img-frame" style="border-color:rgba(124,111,247,.2);">
+                <img src="assets/willitflop_predict.png" alt="Verdict FLOP — WillItFlop" />
+              </div>
+            </div>
+            <div>
+              <p class="muted" style="margin-bottom:14px;">
+                Le modèle combine 5 types de features pour prédire si un jeu indépendant sera un succès
+                commercial (top 17% par estimation d'owners).
+              </p>
+              <ul class="bullets" style="margin-bottom:16px;">
+                <li><strong style="color:var(--accent2);">Numérique</strong> — prix (log-transformé), nombre d'achievements, langues supportées</li>
+                <li><strong style="color:var(--accent2);">Booléen</strong> — gratuit, accès anticipé</li>
+                <li><strong style="color:var(--accent2);">Multi-label (MLB)</strong> — tags ×3, genres ×2, catégories ×2 (pondération par répétition de colonnes pour colsample_bytree)</li>
+                <li><strong style="color:var(--accent2);">Texte (TF-IDF)</strong> — description nettoyée, 200 features</li>
+                <li><strong style="color:var(--accent2);">Sample weighting</strong> — pondération par ancienneté du jeu (les jeux récents ont des labels moins fiables)</li>
+              </ul>
+              <div class="card" style="background:rgba(0,212,255,.05);border-color:rgba(0,212,255,.2);">
+                <div class="card-body" style="padding:12px 14px;">
+                  <p class="small" style="margin:0;color:var(--muted);">
+                    Le seuil de décision (<code>0.57</code>) est optimisé sur le F1-score.
+                    Le <code>scale_pos_weight</code> est calculé dynamiquement pour gérer le déséquilibre
+                    de classes (17% positifs / 83% négatifs).
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="kpi-row-4">
+            <div class="kpi-card">
+              <div class="kpi-value">0.831</div>
+              <div class="kpi-label">ROC-AUC</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-value">0.529</div>
+              <div class="kpi-label">F1-Score</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-value">0.452</div>
+              <div class="kpi-label">Precision</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-value">0.638</div>
+              <div class="kpi-label">Recall</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PHASE 3 — APPLICATION FULL-STACK -->
+        <div class="phase-block" style="border-left-color:#ff4b69;">
+          <div class="phase-title">
+            <span class="step-number" style="background:linear-gradient(135deg,#ff4b69,#c0392b);">3</span>
+            <div>
+              <div class="section-label" style="margin-bottom:2px;color:#ff9db0;">Full-Stack</div>
+              <h2 style="margin:0;">React + FastAPI — application interactive déployée</h2>
+            </div>
+          </div>
+
+          <p class="muted" style="max-width:68ch;margin-bottom:20px;">
+            L'application combine une API <strong style="color:var(--text);">FastAPI</strong> (Render)
+            avec un frontend <strong style="color:var(--text);">React 19</strong> (Vercel). 6 pages :
+            accueil avec prédiction interactive, dashboard Market Intelligence, catalogue de 17 000+ jeux
+            avec recherche et filtres, fiches détaillées avec screenshots et trailers, leaderboard top/flop,
+            et même un mini-jeu. La traduction FR est assurée par <strong style="color:var(--text);">DeepL</strong>
+            via un proxy API.
+          </p>
+
+          <div class="img-frame" style="margin-bottom:8px;">
+            <img src="assets/willitflop_database.png" alt="Catalogue de jeux WillItFlop" />
+          </div>
+          <p class="img-caption">Catalogue de 17 000+ jeux indépendants — recherche, filtres, tri par Metacritic/popularité</p>
+
+          <div class="grid-3" style="margin-top:20px;gap:8px;">
+            <div class="card"><div class="card-body" style="padding:11px 13px;">
+              <h3 style="font-size:.84rem;margin-bottom:3px;">🎮 Prédiction ML</h3>
+              <p class="muted small" style="margin:0;">Créez un concept de jeu fictif et obtenez un verdict Top ou Flop avec score de confiance, une jaquette générée par <strong style="color:var(--text);">Pollinations.ai</strong> et une fausse review presse rédigée par <strong style="color:var(--text);">Groq (Llama 3)</strong></p>
+            </div></div>
+            <div class="card"><div class="card-body" style="padding:11px 13px;">
+              <h3 style="font-size:.84rem;margin-bottom:3px;">📊 Market Intelligence</h3>
+              <p class="muted small" style="margin:0;">Dashboard analytique : volume, saisonnalité, genres, Twitch, sentiment</p>
+            </div></div>
+            <div class="card"><div class="card-body" style="padding:11px 13px;">
+              <h3 style="font-size:.84rem;margin-bottom:3px;">🗂️ Catalogue 17K+</h3>
+              <p class="muted small" style="margin:0;">Base de données avec fiches détaillées, screenshots, trailers HLS</p>
+            </div></div>
+            <div class="card"><div class="card-body" style="padding:11px 13px;">
+              <h3 style="font-size:.84rem;margin-bottom:3px;">🏆 Leaderboard</h3>
+              <p class="muted small" style="margin:0;">Classement des plus gros succès et des plus gros flops</p>
+            </div></div>
+            <div class="card"><div class="card-body" style="padding:11px 13px;">
+              <h3 style="font-size:.84rem;margin-bottom:3px;">🌐 Traduction DeepL</h3>
+              <p class="muted small" style="margin:0;">Proxy API pour traduction EN→FR des descriptions et reviews</p>
+            </div></div>
+            <div class="card"><div class="card-body" style="padding:11px 13px;">
+              <h3 style="font-size:.84rem;margin-bottom:3px;">🎰 Mini-jeux</h3>
+              <p class="muted small" style="margin:0;">Quiz, slot machine et jeux interactifs pour explorer les données</p>
+            </div></div>
+          </div>
+        </div>
+
+        <!-- STACK TECHNIQUE -->
+        <div class="section-sep"></div>
+
+        <div style="margin-bottom:44px;">
+          <div class="section-label">Stack technique</div>
+          <h2 style="margin-bottom:6px;">Technologies utilisées</h2>
+          <p class="muted" style="margin-bottom:4px;">8 technologies clés couvrant l'ensemble de l'architecture.</p>
+          <div class="lib-grid">
+            <div class="lib-card">
+              <div class="lib-icon">🐍</div>
+              <div class="lib-name">Python</div>
+              <div class="lib-desc">Pipeline ETL, ML training, API FastAPI, transformations dbt</div>
+            </div>
+            <div class="lib-card">
+              <div class="lib-icon">🤖</div>
+              <div class="lib-name">XGBoost</div>
+              <div class="lib-desc">Classificateur binaire avec cross-validation 5-fold et pondération d'échantillons</div>
+            </div>
+            <div class="lib-card">
+              <div class="lib-icon">⚡</div>
+              <div class="lib-name">FastAPI</div>
+              <div class="lib-desc">API REST async avec caching TTL, proxy DeepL, connexion PostgreSQL</div>
+            </div>
+            <div class="lib-card">
+              <div class="lib-icon">⚛️</div>
+              <div class="lib-name">React 19</div>
+              <div class="lib-desc">SPA avec React Router, hooks custom, Framer Motion, Recharts</div>
+            </div>
+            <div class="lib-card">
+              <div class="lib-icon">🔄</div>
+              <div class="lib-name">Prefect 3</div>
+              <div class="lib-desc">Orchestration ETL hebdomadaire, retry automatique, observabilité cloud</div>
+            </div>
+            <div class="lib-card">
+              <div class="lib-icon">🗄️</div>
+              <div class="lib-name">dbt</div>
+              <div class="lib-desc">Transformation SQL : staging, features ML, marts sentiment</div>
+            </div>
+            <div class="lib-card">
+              <div class="lib-icon">🎨</div>
+              <div class="lib-name">Pollinations.ai</div>
+              <div class="lib-desc">Génération de jaquette personnalisée selon le concept du jeu créé par l'utilisateur</div>
+            </div>
+            <div class="lib-card">
+              <div class="lib-icon">💬</div>
+              <div class="lib-name">Groq — Llama 3</div>
+              <div class="lib-desc">Rédaction d'une fausse review presse contextuelle basée sur le concept et la prédiction ML</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ARCHITECTURE -->
+        <div class="section-sep"></div>
+
+        <div style="margin-bottom:44px;">
+          <div class="section-label">Architecture</div>
+          <h2 style="margin-bottom:6px;">Stack complète — du scraping au déploiement</h2>
+          <p class="muted" style="margin-bottom:16px;">
+            Architecture découplée multi-cloud : chaque composant est déployé indépendamment et communique via des interfaces standardisées.
+          </p>
+          <div class="arch-pipeline">
+            <div class="arch-step">
+              <div class="arch-icon">🎮</div>
+              <div class="arch-label">Sources</div>
+              <div class="arch-desc">Steam API + SteamSpy + Twitch</div>
+            </div>
+            <div class="arch-step">
+              <div class="arch-icon">🔄</div>
+              <div class="arch-label">ETL</div>
+              <div class="arch-desc">Prefect 3 + GitHub Actions</div>
+            </div>
+            <div class="arch-step">
+              <div class="arch-icon">🗄️</div>
+              <div class="arch-label">Base de données</div>
+              <div class="arch-desc">PostgreSQL (Supabase)</div>
+            </div>
+            <div class="arch-step">
+              <div class="arch-icon">🔧</div>
+              <div class="arch-label">Transform</div>
+              <div class="arch-desc">dbt — features ML + marts</div>
+            </div>
+            <div class="arch-step">
+              <div class="arch-icon">⚡</div>
+              <div class="arch-label">API</div>
+              <div class="arch-desc">XGBoost CI + FastAPI (Render)</div>
+            </div>
+            <div class="arch-step">
+              <div class="arch-icon">⚛️</div>
+              <div class="arch-label">Frontend</div>
+              <div class="arch-desc">React 19 (Vercel)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RÉSULTATS & APPRENTISSAGES -->
+        <div class="section-sep"></div>
+
+        <div style="margin-bottom:44px;">
+          <div class="section-label">Bilan</div>
+          <h2 style="margin-bottom:6px;">Résultats & apprentissages</h2>
+          <p class="muted" style="margin-bottom:20px;">Un projet end-to-end complet, du scraping à l'application en production multi-cloud.</p>
+          <div class="grid-3">
+            <div class="card card-hi">
+              <div class="card-body">
+                <div style="font-size:1.4rem;margin-bottom:8px;">🔗</div>
+                <h3>Pipeline production</h3>
+                <p class="muted small">ETL hebdomadaire orchestré par Prefect Cloud, déclenché par GitHub Actions. 5 étapes avec retry et monitoring.</p>
+              </div>
+            </div>
+            <div class="card card-hi">
+              <div class="card-body">
+                <div style="font-size:1.4rem;margin-bottom:8px;">🧠</div>
+                <h3>ML en CI/CD</h3>
+                <p class="muted small">Le modèle se ré-entraîne automatiquement quand les features ou la config changent. Artifacts auto-commités par GitHub Actions.</p>
+              </div>
+            </div>
+            <div class="card card-hi">
+              <div class="card-body">
+                <div style="font-size:1.4rem;margin-bottom:8px;">🚀</div>
+                <h3>Déploiement multi-cloud</h3>
+                <p class="muted small">Frontend sur Vercel, API sur Render, DB sur Supabase, orchestration sur Prefect Cloud. Architecture découplée et scalable.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- NAVIGATION PROJET -->
+      <div class="proj-nav">
+        <a class="btn btn-ghost btn-sm" href="cinedata.html">← Projet précédent : CinéData</a>
+        <a class="btn btn-sm" href="index.html#projects">Tous les projets →</a>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p class="muted small">© <span id="year"></span> Anthony • Portfolio Data</p>
+      <a class="link small" href="index.html">Accueil</a>
+    </div>
+  </footer>
+
+  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>
